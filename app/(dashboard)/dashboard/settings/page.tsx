@@ -25,8 +25,8 @@ export default async function SettingsPage() {
   return (
     <div style={{ display: 'grid', gap: 18 }}>
       <section style={{ borderRadius: 28, padding: 24, background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 46%, #0f766e 100%)', color: '#fff' }}>
-        <p style={{ margin: 0, fontSize: '0.78rem', fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.78 }}>Workspace Settings</p>
-        <h1 style={{ margin: '10px 0 0', fontSize: '2rem', lineHeight: 1.04, fontWeight: 950, letterSpacing: '-0.04em' }}>Manage organization identity and default workspace behavior</h1>
+        <p style={{ margin: 0, fontSize: '0.78rem', fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.74)', opacity: 0.78 }}>Workspace Settings</p>
+        <h1 style={{ margin: '10px 0 0', fontSize: '2rem', lineHeight: 1.04, fontWeight: 950, letterSpacing: '-0.04em', color: '#fff' }}>Manage organization identity and default workspace behavior</h1>
         <p style={{ margin: '12px 0 0', maxWidth: 620, color: 'rgba(255,255,255,0.82)', lineHeight: 1.7 }}>
           Keep your organization profile accurate and set the default actor experience for accounts that move between lender and borrower workspaces.
         </p>

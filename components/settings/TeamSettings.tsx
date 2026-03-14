@@ -368,6 +368,7 @@ const eyebrowStyle = {
   fontWeight: 900,
   letterSpacing: '0.08em',
   textTransform: 'uppercase',
+  color: 'rgba(255,255,255,0.74)',
   opacity: 0.78,
 } satisfies React.CSSProperties
 

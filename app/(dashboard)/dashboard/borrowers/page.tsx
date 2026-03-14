@@ -174,6 +174,7 @@ const eyebrowStyle: CSSProperties = {
   fontWeight: 900,
   letterSpacing: '0.08em',
   textTransform: 'uppercase',
+  color: 'rgba(255,255,255,0.74)',
   opacity: 0.78,
 }
 
@@ -184,6 +185,7 @@ const heroTitleStyle: CSSProperties = {
   fontWeight: 950,
   letterSpacing: '-0.04em',
   maxWidth: 760,
+  color: '#fff',
 }
 
 const heroCopyStyle: CSSProperties = {

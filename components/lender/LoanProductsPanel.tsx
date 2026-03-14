@@ -403,8 +403,8 @@ const panelStyle: CSSProperties = {
   padding: 18,
   boxShadow: 'var(--shadow-lg)',
 }
-const heroKickerStyle: CSSProperties = { margin: 0, fontSize: '0.78rem', fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.78 }
-const heroTitleStyle: CSSProperties = { margin: '10px 0 0', fontSize: '2rem', lineHeight: 1.04, fontWeight: 950, letterSpacing: '-0.04em' }
+const heroKickerStyle: CSSProperties = { margin: 0, fontSize: '0.78rem', fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.74)', opacity: 0.78 }
+const heroTitleStyle: CSSProperties = { margin: '10px 0 0', fontSize: '2rem', lineHeight: 1.04, fontWeight: 950, letterSpacing: '-0.04em', color: '#fff' }
 const heroBodyStyle: CSSProperties = { margin: '12px 0 0', color: 'rgba(255,255,255,0.82)', lineHeight: 1.7, maxWidth: 620 }
 const heroPanelStyle: CSSProperties = { borderRadius: 22, background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.14)', padding: 18, backdropFilter: 'blur(10px)' }
 const heroChipStyle: CSSProperties = { display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 12px', borderRadius: 999, background: 'rgba(255,255,255,0.10)', border: '1px solid rgba(255,255,255,0.12)', fontWeight: 800, fontSize: '0.82rem' }

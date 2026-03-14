@@ -85,10 +85,10 @@ export default async function WalletPage() {
         <div style={{ position: 'absolute', inset: 'auto -8% -45% auto', width: 340, height: 340, borderRadius: '50%', background: 'rgba(255,255,255,0.08)', filter: 'blur(10px)' }} />
         <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1.2fr 0.9fr', gap: 18 }}>
           <div>
-            <p style={{ margin: 0, fontSize: '0.76rem', fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.8 }}>
+            <p style={{ margin: 0, fontSize: '0.76rem', fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.74)', opacity: 0.8 }}>
               Wallet Command Center
             </p>
-            <h1 style={{ margin: '10px 0 0', fontSize: '2rem', lineHeight: 1.03, fontWeight: 950, letterSpacing: '-0.04em' }}>
+            <h1 style={{ margin: '10px 0 0', fontSize: '2rem', lineHeight: 1.03, fontWeight: 950, letterSpacing: '-0.04em', color: '#fff' }}>
               Treasury visibility across posted, scheduled, and exception payments
             </h1>
             <p style={{ margin: '12px 0 0', maxWidth: 620, color: 'rgba(255,255,255,0.82)', lineHeight: 1.7 }}>
@@ -102,7 +102,7 @@ export default async function WalletPage() {
           </div>
 
           <div style={{ borderRadius: 22, background: 'rgba(255,255,255,0.09)', border: '1px solid rgba(255,255,255,0.14)', padding: 18, backdropFilter: 'blur(10px)' }}>
-            <p style={{ margin: 0, fontSize: '0.82rem', fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.76 }}>
+            <p style={{ margin: 0, fontSize: '0.82rem', fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.74)', opacity: 0.76 }}>
               Collection Breakdown
             </p>
             <div style={{ marginTop: 16, display: 'grid', gap: 10 }}>

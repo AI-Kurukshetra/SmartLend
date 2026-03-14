@@ -304,8 +304,8 @@ function InfoRow({ label, value }: { label: string; value: string }) {
   )
 }
 
-const heroKickerStyle = { margin: 0, fontSize: '0.78rem', fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase' as const, opacity: 0.78 }
-const heroTitleStyle = { margin: '10px 0 0', fontSize: '2rem', lineHeight: 1.03, fontWeight: 950, letterSpacing: '-0.04em' }
+const heroKickerStyle = { margin: 0, fontSize: '0.78rem', fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase' as const, color: 'rgba(255,255,255,0.74)', opacity: 0.78 }
+const heroTitleStyle = { margin: '10px 0 0', fontSize: '2rem', lineHeight: 1.03, fontWeight: 950, letterSpacing: '-0.04em', color: '#fff' }
 const heroBodyStyle = { margin: '12px 0 0', maxWidth: 620, color: 'rgba(255,255,255,0.82)', lineHeight: 1.7 }
 const heroPanelStyle = { borderRadius: 22, background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.14)', padding: 18, backdropFilter: 'blur(10px)' }
 
