@@ -1,13 +1,11 @@
 'use client'
 
-import { DotLottiePlayer } from '@dotlottie/react-player'
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 
 interface ProductIconProps {
     size?: number
     className?: string
 }
-
-const PRODUCT_ICON_ANIMATION_ID = '45826f7c-f625-4c2f-8f30-00d5db1320da'
 
 export default function ProductIcon({ size = 32, className }: ProductIconProps) {
     return (
@@ -24,9 +22,8 @@ export default function ProductIcon({ size = 32, className }: ProductIconProps) 
                 lineHeight: 0,
             }}
         >
-            <DotLottiePlayer
+            <DotLottieReact
                 src="/product-icon.lottie"
-                activeAnimationId={PRODUCT_ICON_ANIMATION_ID}
                 autoplay
                 loop
                 style={{ width: '100%', height: '100%' }}
