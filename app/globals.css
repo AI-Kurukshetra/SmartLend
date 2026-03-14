@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ─── Design Tokens ─────────────────────────────────── */
+:root {
+  /* Pastel Palette */
+  --pastel-lavender: #c4b5fd;
+  --pastel-lavender-light: #ede9fe;
+  --pastel-lavender-dark: #7c3aed;
+  --pastel-mint: #6ee7b7;
+  --pastel-mint-light: #d1fae5;
+  --pastel-mint-dark: #059669;
+  --pastel-peach: #fca5a5;
+  --pastel-peach-light: #fee2e2;
+  --pastel-peach-dark: #dc2626;
+  --pastel-blush: #fbcfe8;
+  --pastel-blush-light: #fce7f3;
+  --pastel-sky: #bae6fd;
+  --pastel-sky-light: #e0f2fe;
+  --pastel-lemon: #fde68a;
+  --pastel-lemon-light: #fef3c7;
+
+  /* Neutrals */
+  --white: #ffffff;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  /* Primary Brand */
+  --brand-primary: #7c3aed;
+  --brand-secondary: #059669;
+  --brand-accent: #f59e0b;
+
+  /* Semantic */
+  --color-bg: #f8f7ff;
+  --color-surface: #ffffff;
+  --color-border: #e5e7eb;
+  --color-text-primary: #1e1b4b;
+  --color-text-secondary: #6b7280;
+  --color-text-muted: #9ca3af;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+
+/* ─── Dark Mode Tokens ────────────────────────────────── */
+[data-theme="dark"] {
+  /* Neutrals — pure black palette */
+  --white: #0f0f0f;
+  --gray-50: #141414;
+  --gray-100: #1a1a1a;
+  --gray-200: #222222;
+  --gray-300: #2a2a2a;
+  --gray-400: #555555;
+  --gray-500: #777777;
+  --gray-600: #999999;
+  --gray-700: #bbbbbb;
+  --gray-800: #dddddd;
+  --gray-900: #f5f5f5;
+
+  /* Semantic surfaces */
+  --color-bg: #000000;
+  --color-surface: #0f0f0f;
+  --color-border: #222222;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a0a0a0;
+  --color-text-muted: #666666;
+
+  /* Pastel colours — slightly brighter for dark bg readability */
+  --pastel-lavender: #a78bfa;
+  --pastel-lavender-light: rgba(167,139,250,0.12);
+  --pastel-lavender-dark: #8b5cf6;
+  --pastel-mint: #34d399;
+  --pastel-mint-light: rgba(52,211,153,0.12);
+  --pastel-mint-dark: #10b981;
+  --pastel-peach: #f87171;
+  --pastel-peach-light: rgba(248,113,113,0.12);
+  --pastel-peach-dark: #ef4444;
+  --pastel-sky: #38bdf8;
+  --pastel-sky-light: rgba(56,189,248,0.12);
+  --pastel-lemon: #fbbf24;
+  --pastel-lemon-light: rgba(251,191,36,0.12);
+
+  /* Shadows — stronger on pure black */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.6), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.6), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.7), 0 8px 10px -6px rgb(0 0 0 / 0.5);
+}
+
+/* Smooth theme switch for all elements */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+
+
+/* ─── Reset & Base ───────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ─── Typography ─────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text-primary);
+}
+
+h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h3 { font-size: clamp(1.125rem, 2vw, 1.5rem); }
+
+p {
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+a {
+  color: var(--brand-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--pastel-lavender-dark);
+}
+
+/* ─── Form Elements ──────────────────────────────────── */
+input, textarea, select {
+  font-family: inherit;
+  font-size: 0.9375rem;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+/* ─── Utility Classes ────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--pastel-lavender);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-primary);
+}
+
+/* ─── Selection ──────────────────────────────────────── */
+::selection {
+  background-color: var(--pastel-lavender-light);
+  color: var(--brand-primary);
+}
+
+/* ─── Focus visible ──────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── Animations ─────────────────────────────────────── */
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
