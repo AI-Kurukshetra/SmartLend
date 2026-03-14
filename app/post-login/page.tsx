@@ -26,13 +26,31 @@ export default async function PostLoginPage({
   const hasLender = Boolean(membershipRes.data?.id)
   const hasBorrower = Boolean(borrowerRes.data?.id)
   const lastActor = profileRes.data?.last_actor as 'lender' | 'borrower' | undefined
+  const inviteToken = (user.user_metadata as { invite_token?: string } | null)?.invite_token ?? ''
 
+  let hasPendingBorrowerInvite = false
+  if (!hasLender && !hasBorrower && inviteToken) {
+    const inviteRes = await supabase
+      .from('org_invites')
+      .select('role')
+      .eq('token', inviteToken)
+      .limit(1)
+      .maybeSingle()
+    hasPendingBorrowerInvite = inviteRes.data?.role === 'borrower'
+  }
+  const cameFromBorrowerInvite = hasPendingBorrowerInvite || (inviteToken ? !hasLender || lastActor === 'borrower' : false)
+
+  if (hasLender && hasBorrower && !forceSwitch && cameFromBorrowerInvite) {
+    redirect('/borrower')
+  }
   if (hasLender && hasBorrower && !forceSwitch) {
     if (lastActor === 'borrower') redirect('/borrower')
     redirect('/dashboard')
   }
   if (hasLender && !hasBorrower) redirect('/dashboard')
   if (!hasLender && hasBorrower) redirect('/borrower')
+  if (!hasLender && !hasBorrower && hasPendingBorrowerInvite) redirect('/borrower/onboarding')
+  if (!hasLender && !hasBorrower && lastActor === 'borrower') redirect('/borrower/onboarding')
   if (!hasLender && !hasBorrower) redirect('/onboarding')
 
   return (

@@ -50,6 +50,7 @@ export async function createBorrowerProfile(formData: FormData) {
     first_name: user.user_metadata?.first_name ?? '',
     last_name: user.user_metadata?.last_name ?? '',
     phone: phone || null,
+    last_actor: 'borrower',
     updated_at: new Date().toISOString(),
   })
 

@@ -21,14 +21,12 @@ export default async function BorrowerLayout({
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 16 }}>
           <span style={{ fontSize: '1rem', fontWeight: 900, color: 'var(--color-text-primary)' }}>SmartLend Borrower</span>
           <nav style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-            <Link href="/borrower" style={linkStyle}>Overview</Link>
-            <Link href="/borrower/applications" style={linkStyle}>Applications</Link>
+            <Link href="/borrower" style={linkStyle}>Home</Link>
+            <Link href="/borrower/applications/new" style={linkStyle}>Select Loan</Link>
+            <Link href="/borrower/applications" style={linkStyle}>Track Status</Link>
             <Link href="/borrower/documents" style={linkStyle}>Documents</Link>
             <Link href="/borrower/payments" style={linkStyle}>Payments</Link>
-            <Link href="/borrower/statements" style={linkStyle}>Statements</Link>
-            <Link href="/borrower/notifications" style={linkStyle}>Notifications</Link>
-            <Link href="/borrower/support" style={linkStyle}>Support</Link>
-            <Link href="/post-login?switch=1" style={linkStyle}>Switch Actor</Link>
+            <Link href="/borrower/support" style={linkStyle}>Create Ticket</Link>
           </nav>
         </div>
       </header>

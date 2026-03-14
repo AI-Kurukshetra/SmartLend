@@ -12,6 +12,7 @@ export default function NewApplicationForm({
   orgOptions: Array<{ id: string; name: string }>
   productOptions: Array<{ id: string; name: string; orgId: string; minAmount: number; maxAmount: number; minTerm: number; maxTerm: number }>
 }) {
+  const hasMultipleOrgs = orgOptions.length > 1
   const [amount, setAmount] = useState('10000')
   const [term, setTerm] = useState('60')
   const [orgId, setOrgId] = useState(orgOptions[0]?.id || '')
@@ -67,12 +68,21 @@ export default function NewApplicationForm({
         Create a SmartLend application draft, then complete the full borrower portal with documents and e-signature.
       </p>
       <div style={{ marginTop: 16, border: '1px solid #e2e8f0', borderRadius: 16, background: '#fff', padding: 16 }}>
-        <label style={labelStyle}>Lender organization</label>
-        <select value={orgId} onChange={(e) => setOrgId(e.target.value)} style={inputStyle}>
-          {orgOptions.map((org) => (
-            <option key={org.id} value={org.id}>{org.name}</option>
-          ))}
-        </select>
+        {hasMultipleOrgs ? (
+          <>
+            <label style={labelStyle}>Lender organization</label>
+            <select value={orgId} onChange={(e) => setOrgId(e.target.value)} style={inputStyle}>
+              {orgOptions.map((org) => (
+                <option key={org.id} value={org.id}>{org.name}</option>
+              ))}
+            </select>
+          </>
+        ) : (
+          <>
+            <label style={labelStyle}>Lender organization</label>
+            <div style={{ ...inputStyle, background: 'var(--color-surface-soft)', color: 'var(--color-text-primary)' }}>{orgOptions[0]?.name}</div>
+          </>
+        )}
         <label style={labelStyle}>Loan product</label>
         <select value={loanProductId} onChange={(e) => setLoanProductId(e.target.value)} style={inputStyle}>
           {filteredProducts.length === 0 && <option value="">No published products</option>}

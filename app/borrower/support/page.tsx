@@ -70,10 +70,19 @@ async function BorrowerSupportContent() {
     <>
       <form action={createSupportTicket} style={{ marginTop: 16, border: '1px solid #e2e8f0', borderRadius: 14, background: '#fff', padding: 16, display: 'grid', gap: 8, maxWidth: 660 }}>
         <p style={{ margin: 0, color: '#0f172a', fontWeight: 800 }}>Open support ticket</p>
-        <select required name="org_id" style={{ borderRadius: 10, border: '1.5px solid #e2e8f0', padding: '10px 12px' }}>
-          <option value="">Select lender organization</option>
-          {orgs.map((org) => <option key={org.id} value={org.id}>{org.name}</option>)}
-        </select>
+        {orgs.length > 1 ? (
+          <select required name="org_id" style={{ borderRadius: 10, border: '1.5px solid #e2e8f0', padding: '10px 12px' }}>
+            <option value="">Select lender organization</option>
+            {orgs.map((org) => <option key={org.id} value={org.id}>{org.name}</option>)}
+          </select>
+        ) : (
+          <>
+            <input type="hidden" name="org_id" value={orgs[0]?.id || ''} />
+            <div style={{ borderRadius: 10, border: '1.5px solid #e2e8f0', padding: '10px 12px', background: '#f8fafc', color: '#0f172a' }}>
+              {orgs[0]?.name || 'No lender organization available'}
+            </div>
+          </>
+        )}
         <input required name="subject" placeholder="Subject" style={{ borderRadius: 10, border: '1.5px solid #e2e8f0', padding: '10px 12px' }} />
         <textarea required name="message" placeholder="Describe your issue" style={{ borderRadius: 10, border: '1.5px solid #e2e8f0', padding: '10px 12px', minHeight: 110 }} />
         <button type="submit" style={{ border: 'none', borderRadius: 10, background: '#0f766e', color: '#fff', fontWeight: 800, padding: '10px 12px', cursor: 'pointer' }}>Submit ticket</button>

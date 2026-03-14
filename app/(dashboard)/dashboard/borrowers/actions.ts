@@ -185,6 +185,15 @@ export async function acceptBorrowerInvite(token: string) {
     .single()
   if (borrowerUpsert.error) return { error: borrowerUpsert.error.message }
 
+  await supabase.from('profiles').upsert({
+    id: user.id,
+    email: user.email,
+    first_name: user.user_metadata?.first_name ?? '',
+    last_name: user.user_metadata?.last_name ?? '',
+    last_actor: 'borrower',
+    updated_at: new Date().toISOString(),
+  })
+
   const inviteUpdate = await supabase
     .from('org_invites')
     .update({
