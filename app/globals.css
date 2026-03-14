@@ -2,10 +2,10 @@
 
 /* ─── Design Tokens ─────────────────────────────────── */
 :root {
-  /* Pastel Palette */
-  --pastel-lavender: #c4b5fd;
-  --pastel-lavender-light: #ede9fe;
-  --pastel-lavender-dark: #7c3aed;
+  /* Accent Palette */
+  --pastel-lavender: #5eead4;
+  --pastel-lavender-light: #ccfbf1;
+  --pastel-lavender-dark: #0f766e;
   --pastel-mint: #6ee7b7;
   --pastel-mint-light: #d1fae5;
   --pastel-mint-dark: #059669;
@@ -33,17 +33,17 @@
   --gray-900: #111827;
 
   /* Primary Brand */
-  --brand-primary: #7c3aed;
-  --brand-secondary: #059669;
+  --brand-primary: #0f766e;
+  --brand-secondary: #047857;
   --brand-accent: #f59e0b;
 
   /* Semantic */
-  --color-bg: #f8f7ff;
+  --color-bg: #f4f7f6;
   --color-surface: #ffffff;
   --color-border: #e5e7eb;
-  --color-text-primary: #1e1b4b;
-  --color-text-secondary: #6b7280;
-  --color-text-muted: #9ca3af;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -88,9 +88,9 @@
   --color-text-muted: #666666;
 
   /* Pastel colours — slightly brighter for dark bg readability */
-  --pastel-lavender: #a78bfa;
-  --pastel-lavender-light: rgba(167,139,250,0.12);
-  --pastel-lavender-dark: #8b5cf6;
+  --pastel-lavender: #2dd4bf;
+  --pastel-lavender-light: rgba(45,212,191,0.14);
+  --pastel-lavender-dark: #5eead4;
   --pastel-mint: #34d399;
   --pastel-mint-light: rgba(52,211,153,0.12);
   --pastel-mint-dark: #10b981;
@@ -221,7 +221,7 @@ button {
 /* ─── Selection ──────────────────────────────────────── */
 ::selection {
   background-color: var(--pastel-lavender-light);
-  color: var(--brand-primary);
+  color: var(--color-text-primary);
 }
 
 /* ─── Focus visible ──────────────────────────────────── */

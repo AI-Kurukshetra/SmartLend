@@ -1,9 +1,9 @@
 export const lightColors = {
   // Backgrounds
-  pageBg:      '#f0f2f5',
+  pageBg:      '#f4f7f6',
   surface:     '#ffffff',
-  surfaceMuted:'#fafafa',
-  surfaceHover:'#f0f0f0',
+  surfaceMuted:'#f8fafc',
+  surfaceHover:'#eef4f3',
   inputBg:     '#ffffff',
 
   // Borders
@@ -13,10 +13,10 @@ export const lightColors = {
   // Text
   textPrimary:   '#0f172a',
   textSecondary: '#475569',
-  textMuted:     '#94a3b8',
+  textMuted:     '#64748b',
 
   // Brand
-  brand:       '#000000',
+  brand:       '#0f766e',
   brandFg:     '#ffffff',
 }
 
@@ -38,7 +38,7 @@ export const darkColors = {
   textMuted:     '#666666',
 
   // Brand
-  brand:       '#7c3aed',
+  brand:       '#14b8a6',
   brandFg:     '#ffffff',
 }
 

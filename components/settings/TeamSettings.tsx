@@ -3,6 +3,7 @@
 import { useMemo, useState, useTransition } from 'react'
 import type { User } from '@supabase/supabase-js'
 import { generateInviteLink, updateMemberPermissions } from '@/app/settings/team/actions'
+import { formatUiLabel } from '@/lib/utils'
 
 type Membership = {
   orgId: string
@@ -57,7 +58,7 @@ export default function TeamSettings({
       </p>
 
       <div style={{ marginTop: 18, border: '1px solid #e2e8f0', borderRadius: 18, padding: 18, background: '#fff' }}>
-        <p style={{ margin: 0, color: '#0f172a', fontWeight: 900 }}>Your role: {myRole ?? '—'}</p>
+        <p style={{ margin: 0, color: '#0f172a', fontWeight: 900 }}>Your role: {formatUiLabel(myRole ?? '') || '—'}</p>
         <p style={{ margin: '6px 0 0', color: '#64748b' }}>Organization ID: {orgId ?? '—'}</p>
       </div>
 
@@ -197,7 +198,7 @@ function PermissionEditor({
   return (
     <div style={{ border: '1px solid #e2e8f0', borderRadius: 14, padding: 14, background: '#f8fafc' }}>
       <p style={{ margin: 0, color: '#0f172a', fontWeight: 900 }}>{member.user_id}</p>
-      <p style={{ margin: '6px 0 0', color: '#64748b', fontSize: '0.84rem' }}>{member.role} | {member.status}</p>
+      <p style={{ margin: '6px 0 0', color: '#64748b', fontSize: '0.84rem' }}>{formatUiLabel(member.role)} | {formatUiLabel(member.status)}</p>
       <div style={{ marginTop: 10, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         {permissionOptions.map((permission) => {
           const checked = permissions.includes(permission)
@@ -211,7 +212,7 @@ function PermissionEditor({
                   setPermissions((current) => e.target.checked ? [...current, permission] : current.filter((value) => value !== permission))
                 }}
               />
-              {permission}
+              {formatUiLabel(permission)}
             </label>
           )
         })}

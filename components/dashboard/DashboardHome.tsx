@@ -13,7 +13,6 @@ import {
   FileSpreadsheet,
   Gavel,
   HandCoins,
-  Info,
   LineChart,
   LogOut,
   Moon,
@@ -21,7 +20,6 @@ import {
   Sun,
   Users,
   Wallet,
-  XCircle,
 } from 'lucide-react'
 import type { User } from '@supabase/supabase-js'
 import { logout } from '@/app/actions/auth'
@@ -85,6 +83,7 @@ type OverviewProps = {
 export default function DashboardHome({ user, data }: OverviewProps) {
   const { theme, toggleTheme } = useTheme()
   const c = theme === 'dark' ? darkColors : lightColors
+  const isDark = theme === 'dark'
   const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Operator'
 
   const [notifOpen, setNotifOpen] = useState(false)
@@ -155,7 +154,7 @@ export default function DashboardHome({ user, data }: OverviewProps) {
         detail: `${compliance} failed compliance checks need remediation before files move cleanly through the pipeline.`,
         icon: ShieldAlert,
         accent: '#b91c1c',
-        bg: theme === 'dark' ? 'rgba(185,28,28,0.14)' : '#fef2f2',
+        bg: isDark ? 'rgba(185,28,28,0.18)' : '#fef2f2',
       }
     }
     if (risk > 0) {
@@ -164,7 +163,7 @@ export default function DashboardHome({ user, data }: OverviewProps) {
         detail: `${risk} applications are currently rated high risk and should be reviewed by underwriting.`,
         icon: Gavel,
         accent: '#b45309',
-        bg: theme === 'dark' ? 'rgba(180,83,9,0.14)' : '#fffbeb',
+        bg: isDark ? 'rgba(180,83,9,0.18)' : '#fffbeb',
       }
     }
     if (collections > 0) {
@@ -173,7 +172,7 @@ export default function DashboardHome({ user, data }: OverviewProps) {
         detail: `${collections} loan accounts are delinquent and collections actions are running.`,
         icon: AlertTriangle,
         accent: '#b45309',
-        bg: theme === 'dark' ? 'rgba(180,83,9,0.14)' : '#fff7ed',
+        bg: isDark ? 'rgba(180,83,9,0.18)' : '#fff7ed',
       }
     }
     return {
@@ -181,9 +180,47 @@ export default function DashboardHome({ user, data }: OverviewProps) {
       detail: 'Applications, servicing, and compliance are all moving without urgent exceptions.',
       icon: CheckCircle2,
       accent: '#15803d',
-      bg: theme === 'dark' ? 'rgba(21,128,61,0.16)' : '#f0fdf4',
+      bg: isDark ? 'rgba(21,128,61,0.2)' : '#f0fdf4',
     }
-  }, [data.metrics.complianceFailures, data.metrics.delinquentAccounts, data.metrics.highRiskApplications, theme])
+  }, [data.metrics.complianceFailures, data.metrics.delinquentAccounts, data.metrics.highRiskApplications, isDark])
+
+  const overviewTheme = isDark
+    ? {
+        background: 'linear-gradient(135deg, #050816 0%, #0b1220 34%, #0f4c4a 100%)',
+        foreground: '#ffffff',
+        secondary: 'rgba(255,255,255,0.82)',
+        muted: 'rgba(255,255,255,0.75)',
+        overlay: 'rgba(255,255,255,0.08)',
+        panelBg: 'rgba(255,255,255,0.08)',
+        panelBorder: '1px solid rgba(255,255,255,0.14)',
+        rowBg: 'rgba(255,255,255,0.06)',
+        chipBg: 'rgba(255,255,255,0.10)',
+        chipBorder: '1px solid rgba(255,255,255,0.12)',
+      }
+    : {
+        background: 'linear-gradient(135deg, #f8fafc 0%, #ecfdf5 38%, #ccfbf1 100%)',
+        foreground: '#0f172a',
+        secondary: '#334155',
+        muted: '#475569',
+        overlay: 'rgba(16,185,129,0.12)',
+        panelBg: 'rgba(255,255,255,0.86)',
+        panelBorder: '1px solid rgba(15,23,42,0.10)',
+        rowBg: 'rgba(240,253,250,0.95)',
+        chipBg: 'rgba(255,255,255,0.96)',
+        chipBorder: '1px solid rgba(15,23,42,0.10)',
+      }
+
+  const spotlightTitleColor = isDark
+    ? '#ffffff'
+    : spotlight.title === 'Portfolio is operating normally'
+      ? '#065f46'
+      : overviewTheme.foreground
+
+  const spotlightDetailColor = isDark
+    ? '#ffffff'
+    : spotlight.title === 'Portfolio is operating normally'
+      ? '#047857'
+      : overviewTheme.secondary
 
   return (
     <div style={{ display: 'grid', gap: 20 }}>
@@ -276,7 +313,7 @@ export default function DashboardHome({ user, data }: OverviewProps) {
           </button>
 
           <form action={logout}>
-            <button type="submit" style={iconButton(c, '#fff')} aria-label="Logout">
+            <button type="submit" style={iconButton(c, isDark ? 'rgba(255,255,255,0.04)' : '#fff')} aria-label="Logout">
               <LogOut size={16} />
             </button>
           </form>
@@ -290,38 +327,36 @@ export default function DashboardHome({ user, data }: OverviewProps) {
         style={{
           borderRadius: 28,
           padding: 24,
-          background: theme === 'dark'
-            ? 'linear-gradient(135deg, rgba(10,20,32,1) 0%, rgba(13,58,67,1) 100%)'
-            : 'linear-gradient(135deg, #0f172a 0%, #115e59 52%, #f8fafc 160%)',
-          color: '#fff',
+          background: overviewTheme.background,
+          color: overviewTheme.foreground,
           position: 'relative',
           overflow: 'hidden',
         }}
       >
-        <div style={{ position: 'absolute', inset: 'auto -6% -45% auto', width: 320, height: 320, borderRadius: '50%', background: 'rgba(255,255,255,0.08)', filter: 'blur(10px)' }} />
+        <div style={{ position: 'absolute', inset: 'auto -6% -45% auto', width: 320, height: 320, borderRadius: '50%', background: overviewTheme.overlay, filter: 'blur(10px)' }} />
         <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1.3fr 0.9fr', gap: 18 }}>
           <div>
             <p style={{ margin: 0, fontSize: '0.78rem', fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.78 }}>
               Portfolio Command Center
             </p>
-            <h2 style={{ margin: '10px 0 0', fontSize: '2rem', lineHeight: 1.02, fontWeight: 950, letterSpacing: '-0.04em' }}>
+            <h2 style={{ margin: '10px 0 0', fontSize: '2rem', lineHeight: 1.02, fontWeight: 950, letterSpacing: '-0.04em', color: spotlightTitleColor }}>
               {spotlight.title}
             </h2>
-            <p style={{ margin: '12px 0 0', maxWidth: 560, lineHeight: 1.7, color: 'rgba(255,255,255,0.82)' }}>
+            <p style={{ margin: '12px 0 0', maxWidth: 560, lineHeight: 1.7, color: spotlightDetailColor }}>
               {spotlight.detail}
             </p>
             <div style={{ marginTop: 18, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-              <HeroChip icon={HandCoins} label={`${data.metrics.fundingReadyCount} ready for funding`} />
-              <HeroChip icon={Clock3} label={`${data.metrics.dueSoonCount} payments due soon`} />
-              <HeroChip icon={BookOpenCheck} label={`${data.approvalRate}% approval rate`} />
+              <HeroChip icon={HandCoins} label={`${data.metrics.fundingReadyCount} ready for funding`} theme={theme} />
+              <HeroChip icon={Clock3} label={`${data.metrics.dueSoonCount} payments due soon`} theme={theme} />
+              <HeroChip icon={BookOpenCheck} label={`${data.approvalRate}% approval rate`} theme={theme} />
             </div>
           </div>
 
           <div style={{
             alignSelf: 'stretch',
             borderRadius: 22,
-            background: 'rgba(255,255,255,0.09)',
-            border: '1px solid rgba(255,255,255,0.12)',
+            background: overviewTheme.panelBg,
+            border: overviewTheme.panelBorder,
             padding: 18,
             backdropFilter: 'blur(10px)',
           }}>
@@ -331,20 +366,20 @@ export default function DashboardHome({ user, data }: OverviewProps) {
               </div>
               <div>
                 <p style={{ margin: 0, fontWeight: 900 }}>Live exception snapshot</p>
-                <p style={{ margin: '4px 0 0', fontSize: '0.82rem', color: 'rgba(255,255,255,0.75)' }}>Issues that need operational attention now</p>
+                <p style={{ margin: '4px 0 0', fontSize: '0.82rem', color: overviewTheme.muted }}>Issues that need operational attention now</p>
               </div>
             </div>
             <div style={{ marginTop: 16, display: 'grid', gap: 10 }}>
               {data.pipeline.map((item) => (
-                <div key={item.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 12px', borderRadius: 14, background: 'rgba(255,255,255,0.06)' }}>
+                <div key={item.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 12px', borderRadius: 14, background: overviewTheme.rowBg }}>
                   <span style={{ fontWeight: 700 }}>{item.label}</span>
                   <span style={{
                     borderRadius: 999,
                     padding: '6px 10px',
                     fontSize: '0.8rem',
                     fontWeight: 900,
-                    background: pipelineTone(item.tone).bg,
-                    color: pipelineTone(item.tone).fg,
+                    background: pipelineTone(item.tone, isDark).bg,
+                    color: pipelineTone(item.tone, isDark).fg,
                   }}>
                     {item.count}
                   </span>
@@ -356,15 +391,15 @@ export default function DashboardHome({ user, data }: OverviewProps) {
       </motion.section>
 
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))', gap: 12 }}>
-        <MetricCard icon={Users} label="Active borrowers" value={String(data.metrics.activeBorrowers)} tone="slate" />
-        <MetricCard icon={Wallet} label="Outstanding principal" value={`$${formatCompact(data.metrics.outstandingPrincipal)}`} tone="teal" />
-        <MetricCard icon={LineChart} label="Monthly collections" value={`$${formatCompact(data.metrics.monthlyCollections)}`} tone="green" />
-        <MetricCard icon={AlertTriangle} label="Delinquent accounts" value={String(data.metrics.delinquentAccounts)} tone="amber" />
-        <MetricCard icon={ShieldAlert} label="Compliance failures" value={String(data.metrics.complianceFailures)} tone="red" />
+        <MetricCard theme={theme} icon={Users} label="Active borrowers" value={String(data.metrics.activeBorrowers)} tone="slate" />
+        <MetricCard theme={theme} icon={Wallet} label="Outstanding principal" value={`$${formatCompact(data.metrics.outstandingPrincipal)}`} tone="teal" />
+        <MetricCard theme={theme} icon={LineChart} label="Monthly collections" value={`$${formatCompact(data.metrics.monthlyCollections)}`} tone="green" />
+        <MetricCard theme={theme} icon={AlertTriangle} label="Delinquent accounts" value={String(data.metrics.delinquentAccounts)} tone="amber" />
+        <MetricCard theme={theme} icon={ShieldAlert} label="Compliance failures" value={String(data.metrics.complianceFailures)} tone="red" />
       </section>
 
       <section style={{ display: 'grid', gridTemplateColumns: '1.15fr 0.85fr', gap: 16 }}>
-        <Panel title="Origination Pipeline" subtitle="Recent applications with underwriting and workflow state">
+        <Panel theme={theme} title="Origination Pipeline" subtitle="Recent applications with underwriting and workflow state">
           <div style={{ display: 'grid', gap: 10 }}>
             {data.recentApplications.length === 0 && <div style={emptyBox(c)}>No applications yet.</div>}
             {data.recentApplications.map((item) => (
@@ -384,7 +419,7 @@ export default function DashboardHome({ user, data }: OverviewProps) {
           </div>
         </Panel>
 
-        <Panel title="Active Servicing" subtitle="Accounts requiring collections or payment attention">
+        <Panel theme={theme} title="Active Servicing" subtitle="Accounts requiring collections or payment attention">
           <div style={{ display: 'grid', gap: 10 }}>
             {data.activeAccounts.length === 0 && <div style={emptyBox(c)}>No loan accounts yet.</div>}
             {data.activeAccounts.map((item) => (
@@ -408,21 +443,21 @@ export default function DashboardHome({ user, data }: OverviewProps) {
       </section>
 
       <section style={{ display: 'grid', gridTemplateColumns: '0.9fr 1.1fr', gap: 16 }}>
-        <Panel title="Operational Priorities" subtitle="Where lender teams should spend time next">
+        <Panel theme={theme} title="Operational Priorities" subtitle="Where lender teams should spend time next">
           <div style={{ display: 'grid', gap: 10 }}>
-            <PriorityRow icon={HandCoins} title="Funding queue" detail={`${data.metrics.fundingReadyCount} approved applications are ready to convert into active loan accounts.`} />
-            <PriorityRow icon={Gavel} title="Risk and underwriting" detail={`${data.metrics.highRiskApplications} applications are flagged high-risk and need manual review or policy adjustment.`} />
-            <PriorityRow icon={FileSpreadsheet} title="Servicing follow-up" detail={`${data.metrics.dueSoonCount} upcoming dues and ${data.metrics.delinquentAccounts} delinquent accounts are in the payment follow-up window.`} />
-            <PriorityRow icon={BookOpenCheck} title="Compliance readiness" detail={`${data.metrics.complianceFailures} active failures are blocking clean audit posture and should be remediated.`} />
+            <PriorityRow theme={theme} icon={HandCoins} title="Funding queue" detail={`${data.metrics.fundingReadyCount} approved applications are ready to convert into active loan accounts.`} />
+            <PriorityRow theme={theme} icon={Gavel} title="Risk and underwriting" detail={`${data.metrics.highRiskApplications} applications are flagged high-risk and need manual review or policy adjustment.`} />
+            <PriorityRow theme={theme} icon={FileSpreadsheet} title="Servicing follow-up" detail={`${data.metrics.dueSoonCount} upcoming dues and ${data.metrics.delinquentAccounts} delinquent accounts are in the payment follow-up window.`} />
+            <PriorityRow theme={theme} icon={BookOpenCheck} title="Compliance readiness" detail={`${data.metrics.complianceFailures} active failures are blocking clean audit posture and should be remediated.`} />
           </div>
         </Panel>
 
-        <Panel title="Recent Audit Activity" subtitle="Live actions across origination, servicing, collections, and support">
+        <Panel theme={theme} title="Recent Audit Activity" subtitle="Live actions across origination, servicing, collections, and support">
           <div style={{ display: 'grid', gap: 10 }}>
             {data.recentEvents.length === 0 && <div style={emptyBox(c)}>No audit activity recorded yet.</div>}
             {data.recentEvents.map((item) => (
               <div key={item.id} style={{ ...listRow(c), alignItems: 'flex-start' }}>
-                <div style={{ width: 38, height: 38, borderRadius: 12, background: theme === 'dark' ? '#111827' : '#f8fafc', display: 'grid', placeItems: 'center', flexShrink: 0 }}>
+                <div style={{ width: 38, height: 38, borderRadius: 12, background: isDark ? '#111827' : '#f8fafc', display: 'grid', placeItems: 'center', flexShrink: 0 }}>
                   <ArrowRight size={16} color={c.textSecondary} />
                 </div>
                 <div style={{ flex: 1 }}>
@@ -461,19 +496,22 @@ export default function DashboardHome({ user, data }: OverviewProps) {
 }
 
 function Panel({
+  theme,
   title,
   subtitle,
   children,
 }: {
+  theme: 'light' | 'dark'
   title: string
   subtitle: string
   children: React.ReactNode
 }) {
+  const c = theme === 'dark' ? darkColors : lightColors
   return (
-    <div style={{ border: '1px solid #e2e8f0', borderRadius: 24, background: '#fff', padding: 18 }}>
+    <div style={{ border: `1px solid ${c.border}`, borderRadius: 24, background: c.surface, padding: 18, boxShadow: theme === 'dark' ? '0 18px 40px rgba(0,0,0,0.24)' : '0 10px 30px rgba(15,23,42,0.06)' }}>
       <div style={{ marginBottom: 14 }}>
-        <h3 style={{ margin: 0, color: '#0f172a', fontSize: '1.05rem', fontWeight: 950 }}>{title}</h3>
-        <p style={{ margin: '6px 0 0', color: '#64748b', fontSize: '0.85rem', lineHeight: 1.6 }}>{subtitle}</p>
+        <h3 style={{ margin: 0, color: c.textPrimary, fontSize: '1.05rem', fontWeight: 950 }}>{title}</h3>
+        <p style={{ margin: '6px 0 0', color: c.textSecondary, fontSize: '0.85rem', lineHeight: 1.6 }}>{subtitle}</p>
       </div>
       {children}
     </div>
@@ -481,50 +519,56 @@ function Panel({
 }
 
 function MetricCard({
+  theme,
   icon: Icon,
   label,
   value,
   tone,
 }: {
+  theme: 'light' | 'dark'
   icon: React.ComponentType<{ size?: number; color?: string }>
   label: string
   value: string
   tone: 'slate' | 'teal' | 'green' | 'amber' | 'red'
 }) {
+  const c = theme === 'dark' ? darkColors : lightColors
+  const isDark = theme === 'dark'
   const palette = {
-    slate: { bg: '#f8fafc', fg: '#0f172a' },
-    teal: { bg: '#ecfeff', fg: '#155e75' },
-    green: { bg: '#f0fdf4', fg: '#166534' },
-    amber: { bg: '#fffbeb', fg: '#92400e' },
-    red: { bg: '#fef2f2', fg: '#991b1b' },
+    slate: { bg: isDark ? 'rgba(148,163,184,0.12)' : '#f8fafc', fg: isDark ? '#f8fafc' : '#0f172a' },
+    teal: { bg: isDark ? 'rgba(20,184,166,0.14)' : '#ecfeff', fg: isDark ? '#99f6e4' : '#155e75' },
+    green: { bg: isDark ? 'rgba(34,197,94,0.14)' : '#f0fdf4', fg: isDark ? '#bbf7d0' : '#166534' },
+    amber: { bg: isDark ? 'rgba(245,158,11,0.16)' : '#fffbeb', fg: isDark ? '#fde68a' : '#92400e' },
+    red: { bg: isDark ? 'rgba(239,68,68,0.15)' : '#fef2f2', fg: isDark ? '#fecaca' : '#991b1b' },
   }[tone]
 
   return (
-    <div style={{ border: '1px solid #e2e8f0', borderRadius: 22, background: '#fff', padding: 16 }}>
+    <div style={{ border: `1px solid ${c.border}`, borderRadius: 22, background: c.surface, padding: 16, boxShadow: isDark ? '0 18px 36px rgba(0,0,0,0.2)' : '0 10px 24px rgba(15,23,42,0.05)' }}>
       <div style={{ width: 42, height: 42, borderRadius: 14, background: palette.bg, display: 'grid', placeItems: 'center' }}>
         <Icon size={18} color={palette.fg} />
       </div>
-      <p style={{ margin: '16px 0 0', color: '#64748b', fontWeight: 700, fontSize: '0.84rem' }}>{label}</p>
-      <p style={{ margin: '6px 0 0', color: '#0f172a', fontWeight: 950, fontSize: '1.6rem', letterSpacing: '-0.03em' }}>{value}</p>
+      <p style={{ margin: '16px 0 0', color: c.textSecondary, fontWeight: 700, fontSize: '0.84rem' }}>{label}</p>
+      <p style={{ margin: '6px 0 0', color: c.textPrimary, fontWeight: 950, fontSize: '1.6rem', letterSpacing: '-0.03em' }}>{value}</p>
     </div>
   )
 }
 
-function PriorityRow({ icon: Icon, title, detail }: { icon: React.ComponentType<{ size?: number; color?: string }>; title: string; detail: string }) {
+function PriorityRow({ theme, icon: Icon, title, detail }: { theme: 'light' | 'dark'; icon: React.ComponentType<{ size?: number; color?: string }>; title: string; detail: string }) {
+  const c = theme === 'dark' ? darkColors : lightColors
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '40px 1fr', gap: 12, alignItems: 'start', padding: '10px 0' }}>
-      <div style={{ width: 40, height: 40, borderRadius: 12, background: '#f8fafc', display: 'grid', placeItems: 'center' }}>
-        <Icon size={18} color="#0f766e" />
+      <div style={{ width: 40, height: 40, borderRadius: 12, background: theme === 'dark' ? 'rgba(20,184,166,0.12)' : '#f0fdfa', display: 'grid', placeItems: 'center' }}>
+        <Icon size={18} color={theme === 'dark' ? '#5eead4' : '#0f766e'} />
       </div>
       <div>
-        <p style={{ margin: 0, color: '#0f172a', fontWeight: 900 }}>{title}</p>
-        <p style={{ margin: '6px 0 0', color: '#64748b', fontSize: '0.84rem', lineHeight: 1.6 }}>{detail}</p>
+        <p style={{ margin: 0, color: c.textPrimary, fontWeight: 900 }}>{title}</p>
+        <p style={{ margin: '6px 0 0', color: c.textSecondary, fontSize: '0.84rem', lineHeight: 1.6 }}>{detail}</p>
       </div>
     </div>
   )
 }
 
-function HeroChip({ icon: Icon, label }: { icon: React.ComponentType<{ size?: number; color?: string }>; label: string }) {
+function HeroChip({ icon: Icon, label, theme }: { icon: React.ComponentType<{ size?: number; color?: string }>; label: string; theme: 'light' | 'dark' }) {
+  const isDark = theme === 'dark'
   return (
     <span style={{
       display: 'inline-flex',
@@ -532,12 +576,13 @@ function HeroChip({ icon: Icon, label }: { icon: React.ComponentType<{ size?: nu
       gap: 8,
       padding: '10px 12px',
       borderRadius: 999,
-      background: 'rgba(255,255,255,0.10)',
-      border: '1px solid rgba(255,255,255,0.12)',
+      background: isDark ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.82)',
+      border: isDark ? '1px solid rgba(255,255,255,0.12)' : '1px solid rgba(15,23,42,0.08)',
       fontWeight: 800,
       fontSize: '0.82rem',
+      color: isDark ? '#ffffff' : '#0f172a',
     }}>
-      <Icon size={14} color="#fff" />
+      <Icon size={14} color={isDark ? '#ffffff' : '#0f172a'} />
       {label}
     </span>
   )
@@ -625,11 +670,11 @@ function statusPill(status: string) {
   }
 }
 
-function pipelineTone(tone: 'neutral' | 'good' | 'warning' | 'danger') {
-  if (tone === 'good') return { bg: '#dcfce7', fg: '#166534' }
-  if (tone === 'warning') return { bg: '#fef3c7', fg: '#92400e' }
-  if (tone === 'danger') return { bg: '#fee2e2', fg: '#991b1b' }
-  return { bg: '#e2e8f0', fg: '#334155' }
+function pipelineTone(tone: 'neutral' | 'good' | 'warning' | 'danger', isDark: boolean) {
+  if (tone === 'good') return { bg: isDark ? 'rgba(34,197,94,0.18)' : '#dcfce7', fg: isDark ? '#dcfce7' : '#166534' }
+  if (tone === 'warning') return { bg: isDark ? 'rgba(245,158,11,0.22)' : '#fef3c7', fg: isDark ? '#fef3c7' : '#92400e' }
+  if (tone === 'danger') return { bg: isDark ? 'rgba(239,68,68,0.2)' : '#fee2e2', fg: isDark ? '#fee2e2' : '#991b1b' }
+  return { bg: isDark ? 'rgba(148,163,184,0.2)' : '#e2e8f0', fg: isDark ? '#e2e8f0' : '#334155' }
 }
 
 function formatCompact(value: number) {

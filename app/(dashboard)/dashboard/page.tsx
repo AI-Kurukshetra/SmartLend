@@ -3,6 +3,33 @@ import { createClient } from '@/lib/supabase/server'
 import { getCurrentOrgId } from '@/lib/authz'
 import DashboardHome from '@/components/dashboard/DashboardHome'
 
+function toHeadline(value: string) {
+  return value
+    .replaceAll('.', ' ')
+    .replaceAll('_', ' ')
+    .trim()
+    .replace(/\b\w/g, (char) => char.toUpperCase())
+}
+
+function formatAuditDetail(resourceType: string | null, payload: Record<string, unknown> | null) {
+  const label = resourceType ? toHeadline(resourceType) : 'Activity'
+
+  if (!payload || Object.keys(payload).length === 0) {
+    return label
+  }
+
+  if (typeof payload.email === 'string' && payload.email.length > 0) {
+    return `${label} for ${payload.email}`
+  }
+
+  const summary = Object.entries(payload)
+    .slice(0, 2)
+    .map(([key, value]) => `${toHeadline(key)}: ${String(value)}`)
+    .join(' • ')
+
+  return summary ? `${label} • ${summary}` : label
+}
+
 export const metadata: Metadata = {
     title: 'Dashboard',
     description: 'Your SmartLend overview for lending operations, servicing, and portfolio activity.',
@@ -119,8 +146,11 @@ export default async function DashboardPage() {
 
   const recentEvents = (auditRes.data || []).map((item: any) => ({
     id: item.id as string,
-    title: String(item.event_type || 'event').replaceAll('.', ' '),
-    detail: `${item.resource_type}${item.payload && Object.keys(item.payload).length ? ` | ${JSON.stringify(item.payload)}` : ''}`,
+    title: toHeadline(String(item.event_type || 'event')),
+    detail: formatAuditDetail(
+      (item.resource_type as string | null) ?? null,
+      (item.payload as Record<string, unknown> | null) ?? null
+    ),
     createdAt: item.created_at as string,
   }))
 
