@@ -41,8 +41,8 @@ export default async function ProfilePage() {
         <InfoCard icon={ShieldCheck} label="Role" value={membership ? formatUiLabel(membership.role) : 'No active membership'} />
       </section>
 
-      <section style={{ border: '1px solid #dbe4f0', borderRadius: 24, background: '#fff', padding: 18, boxShadow: '0 10px 28px rgba(15,23,42,0.04)' }}>
-        <h2 style={{ margin: 0, color: '#0f172a', fontWeight: 950, fontSize: '1.08rem' }}>Workspace identity</h2>
+      <section style={{ border: '1px solid var(--color-border)', borderRadius: 24, background: 'var(--color-surface)', padding: 18, boxShadow: 'var(--shadow-lg)' }}>
+        <h2 style={{ margin: 0, color: 'var(--color-text-primary)', fontWeight: 950, fontSize: '1.08rem' }}>Workspace identity</h2>
         <div style={{ marginTop: 14, display: 'grid', gap: 10 }}>
           <Row label="Preferred actor" value={formatUiLabel(profileRes.data?.last_actor || 'lender')} />
           <Row label="Organization access" value={membership ? `Connected to ${membership.orgId}` : 'No connected organization'} />
@@ -69,21 +69,21 @@ function InfoCard({
   value: string
 }) {
   return (
-    <div style={{ border: '1px solid #dbe4f0', borderRadius: 22, background: '#fff', padding: 16, boxShadow: '0 10px 28px rgba(15,23,42,0.04)' }}>
+    <div style={{ border: '1px solid var(--color-border)', borderRadius: 22, background: 'var(--color-surface)', padding: 16, boxShadow: 'var(--shadow-lg)' }}>
       <div style={{ width: 44, height: 44, borderRadius: 14, background: '#eff6ff', border: '1px solid #bfdbfe', display: 'grid', placeItems: 'center' }}>
         <Icon size={18} color="#1d4ed8" />
       </div>
-      <p style={{ margin: '14px 0 0', color: '#64748b', fontWeight: 800, fontSize: '0.84rem' }}>{label}</p>
-      <p style={{ margin: '6px 0 0', color: '#0f172a', fontWeight: 900, fontSize: '1rem', lineHeight: 1.45 }}>{value}</p>
+      <p style={{ margin: '14px 0 0', color: 'var(--color-text-secondary)', fontWeight: 800, fontSize: '0.84rem' }}>{label}</p>
+      <p style={{ margin: '6px 0 0', color: 'var(--color-text-primary)', fontWeight: 900, fontSize: '1rem', lineHeight: 1.45 }}>{value}</p>
     </div>
   )
 }
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'center', border: '1px solid #e2e8f0', borderRadius: 14, background: '#f8fafc', padding: '12px 14px' }}>
-      <span style={{ color: '#64748b', fontWeight: 800, fontSize: '0.82rem' }}>{label}</span>
-      <span style={{ color: '#0f172a', fontWeight: 900, fontSize: '0.86rem', textAlign: 'right' }}>{value}</span>
+    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'center', border: '1px solid var(--color-border)', borderRadius: 14, background: 'var(--gray-50)', padding: '12px 14px' }}>
+      <span style={{ color: 'var(--color-text-secondary)', fontWeight: 800, fontSize: '0.82rem' }}>{label}</span>
+      <span style={{ color: 'var(--color-text-primary)', fontWeight: 900, fontSize: '0.86rem', textAlign: 'right' }}>{value}</span>
     </div>
   )
 }

@@ -16,10 +16,10 @@ export default async function BorrowerLayout({
   if (!user) redirect('/login')
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
-      <header style={{ borderBottom: '1px solid #e2e8f0', background: '#ffffff' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--color-bg)', color: 'var(--color-text-primary)' }}>
+      <header style={{ borderBottom: '1px solid var(--color-border)', background: 'var(--color-surface)' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 16 }}>
-          <span style={{ fontSize: '1rem', fontWeight: 900, color: '#0f172a' }}>SmartLend Borrower</span>
+          <span style={{ fontSize: '1rem', fontWeight: 900, color: 'var(--color-text-primary)' }}>SmartLend Borrower</span>
           <nav style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
             <Link href="/borrower" style={linkStyle}>Overview</Link>
             <Link href="/borrower/applications" style={linkStyle}>Applications</Link>
@@ -38,7 +38,7 @@ export default async function BorrowerLayout({
 }
 
 const linkStyle: CSSProperties = {
-  color: '#334155',
+  color: 'var(--color-text-secondary)',
   textDecoration: 'none',
   fontWeight: 700,
   fontSize: '0.9rem',

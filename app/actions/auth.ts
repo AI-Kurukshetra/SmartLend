@@ -5,8 +5,24 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { getSiteUrl } from '@/lib/siteUrl'
 
+async function getInviteNextPath(supabase: Awaited<ReturnType<typeof createClient>>, inviteToken: string) {
+    if (!inviteToken) return null
+
+    const inviteRes = await supabase
+        .from('org_invites')
+        .select('role')
+        .eq('token', inviteToken)
+        .limit(1)
+        .maybeSingle()
+
+    if (!inviteRes.data?.role) return null
+    if (inviteRes.data.role === 'borrower') return `/borrower/accept?invite=${encodeURIComponent(inviteToken)}`
+    return '/onboarding'
+}
+
 export async function login(formData: FormData) {
     const supabase = await createClient()
+    const inviteToken = (formData.get('invite') as string | null)?.trim() ?? ''
 
     const credentials = {
         email: formData.get('email') as string,
@@ -20,7 +36,8 @@ export async function login(formData: FormData) {
     }
 
     revalidatePath('/', 'layout')
-    redirect('/post-login')
+    const nextPath = await getInviteNextPath(supabase, inviteToken)
+    redirect(nextPath || '/post-login')
 }
 
 export async function signup(formData: FormData) {
@@ -30,11 +47,15 @@ export async function signup(formData: FormData) {
     const lastName = (formData.get('last_name') as string)?.trim() ?? ''
     const fullName = [firstName, lastName].filter(Boolean).join(' ')
     const inviteToken = (formData.get('invite') as string | null)?.trim() ?? ''
+    const inviteNextPath = await getInviteNextPath(supabase, inviteToken)
 
     const credentials = {
         email: formData.get('email') as string,
         password: formData.get('password') as string,
         options: {
+            ...(inviteNextPath ? {
+                emailRedirectTo: `${getSiteUrl()}/auth/callback?next=${encodeURIComponent(inviteNextPath)}`,
+            } : {}),
             data: {
                 first_name: firstName,
                 last_name: lastName,
@@ -81,7 +102,7 @@ export async function resetPassword(formData: FormData) {
     }
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${getSiteUrl()}/auth/callback`,
+        redirectTo: `${getSiteUrl()}/auth/callback?next=${encodeURIComponent('/reset-password')}`,
     })
 
     if (error) {

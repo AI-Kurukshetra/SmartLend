@@ -123,7 +123,7 @@ export default async function LenderApplicationsPage() {
 
       <section style={{ display: 'grid', gap: 12 }}>
         {items.length === 0 && (
-          <div style={{ border: '1px dashed #cbd5e1', borderRadius: 18, background: '#fff', padding: 18, color: '#64748b' }}>
+          <div style={{ border: '1px dashed var(--color-border)', borderRadius: 18, background: 'var(--color-surface)', padding: 18, color: 'var(--color-text-secondary)' }}>
             No applications submitted yet.
           </div>
         )}
@@ -132,11 +132,11 @@ export default async function LenderApplicationsPage() {
           <div
             key={item.id}
             style={{
-              border: '1px solid #dbe4f0',
+              border: '1px solid var(--color-border)',
               borderRadius: 22,
-              background: '#fff',
+              background: 'var(--color-surface)',
               padding: 18,
-              boxShadow: '0 10px 30px rgba(15,23,42,0.04)',
+              boxShadow: 'var(--shadow-lg)',
               display: 'grid',
               gridTemplateColumns: '1.1fr 0.9fr',
               gap: 18,
@@ -145,7 +145,7 @@ export default async function LenderApplicationsPage() {
           >
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-                <p style={{ margin: 0, color: '#0f172a', fontWeight: 950, fontSize: '1.08rem' }}>
+                <p style={{ margin: 0, color: 'var(--color-text-primary)', fontWeight: 950, fontSize: '1.08rem' }}>
                   {money(Number(item.requested_amount || 0))} request
                 </p>
                 <span style={statusBadge(String(item.status || 'draft'))}>{String(item.status || 'draft').replaceAll('_', ' ')}</span>
@@ -157,14 +157,14 @@ export default async function LenderApplicationsPage() {
                 <MetaCard label="Decision signal" value={item.underwriting_recommendation || item.decision_code || 'Awaiting review'} />
               </div>
 
-              <p style={{ margin: '12px 0 0', color: '#64748b', fontSize: '0.83rem' }}>
+              <p style={{ margin: '12px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.83rem' }}>
                 #{item.id.slice(0, 8)} • Created {timeAgo(item.created_at)}
               </p>
             </div>
 
-            <div style={{ border: '1px solid #e2e8f0', borderRadius: 18, background: '#f8fafc', padding: 14 }}>
-              <p style={{ margin: 0, color: '#0f172a', fontWeight: 900 }}>Decision controls</p>
-              <p style={{ margin: '6px 0 0', color: '#64748b', fontSize: '0.82rem', lineHeight: 1.55 }}>
+            <div style={{ border: '1px solid var(--color-border)', borderRadius: 18, background: 'var(--gray-50)', padding: 14 }}>
+              <p style={{ margin: 0, color: 'var(--color-text-primary)', fontWeight: 900 }}>Decision controls</p>
+              <p style={{ margin: '6px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.82rem', lineHeight: 1.55 }}>
                 Update lender status and optional decision code for downstream funding or decline workflows.
               </p>
 
@@ -265,42 +265,42 @@ function MetricCard({
   }[tone]
 
   return (
-    <div style={{ border: '1px solid #dbe4f0', borderRadius: 22, background: '#fff', padding: 16, boxShadow: '0 10px 28px rgba(15,23,42,0.04)' }}>
+    <div style={{ border: '1px solid var(--color-border)', borderRadius: 22, background: 'var(--color-surface)', padding: 16, boxShadow: 'var(--shadow-lg)' }}>
       <div style={{ width: 44, height: 44, borderRadius: 14, background: palette.bg, border: `1px solid ${palette.ring}`, display: 'grid', placeItems: 'center' }}>
         <Icon size={18} color={palette.fg} />
       </div>
-      <p style={{ margin: '14px 0 0', color: '#64748b', fontWeight: 800, fontSize: '0.84rem' }}>{label}</p>
-      <p style={{ margin: '6px 0 0', color: '#0f172a', fontWeight: 950, fontSize: '1.72rem', letterSpacing: '-0.03em' }}>{value}</p>
-      <p style={{ margin: '8px 0 0', color: '#64748b', fontSize: '0.8rem', lineHeight: 1.55 }}>{hint}</p>
+      <p style={{ margin: '14px 0 0', color: 'var(--color-text-secondary)', fontWeight: 800, fontSize: '0.84rem' }}>{label}</p>
+      <p style={{ margin: '6px 0 0', color: 'var(--color-text-primary)', fontWeight: 950, fontSize: '1.72rem', letterSpacing: '-0.03em' }}>{value}</p>
+      <p style={{ margin: '8px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.8rem', lineHeight: 1.55 }}>{hint}</p>
     </div>
   )
 }
 
 function MetaCard({ label, value }: { label: string; value: string }) {
   return (
-    <div style={{ border: '1px solid #e2e8f0', borderRadius: 14, background: '#f8fafc', padding: 12 }}>
-      <p style={{ margin: 0, color: '#64748b', fontWeight: 800, fontSize: '0.75rem' }}>{label}</p>
-      <p style={{ margin: '8px 0 0', color: '#0f172a', fontWeight: 900, fontSize: '0.9rem' }}>{value}</p>
+    <div style={{ border: '1px solid var(--color-border)', borderRadius: 14, background: 'var(--gray-50)', padding: 12 }}>
+      <p style={{ margin: 0, color: 'var(--color-text-secondary)', fontWeight: 800, fontSize: '0.75rem' }}>{label}</p>
+      <p style={{ margin: '8px 0 0', color: 'var(--color-text-primary)', fontWeight: 900, fontSize: '0.9rem' }}>{value}</p>
     </div>
   )
 }
 
 const selectStyle = {
   borderRadius: 12,
-  border: '1.5px solid #cbd5e1',
+  border: '1.5px solid var(--color-border)',
   padding: '10px 12px',
   fontSize: '0.82rem',
-  background: '#fff',
-  color: '#0f172a',
+  background: 'var(--color-surface)',
+  color: 'var(--color-text-primary)',
 } satisfies React.CSSProperties
 
 const inputStyle = {
   borderRadius: 12,
-  border: '1.5px solid #cbd5e1',
+  border: '1.5px solid var(--color-border)',
   padding: '10px 12px',
   fontSize: '0.82rem',
-  background: '#fff',
-  color: '#0f172a',
+  background: 'var(--color-surface)',
+  color: 'var(--color-text-primary)',
 } satisfies React.CSSProperties
 
 const buttonStyle = {

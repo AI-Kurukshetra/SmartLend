@@ -63,14 +63,14 @@ export default async function SettingsPage() {
         </Card>
       </section>
 
-      <section style={{ border: '1px solid #dbe4f0', borderRadius: 24, background: '#fff', padding: 18, boxShadow: '0 10px 28px rgba(15,23,42,0.04)' }}>
+      <section style={{ border: '1px solid var(--color-border)', borderRadius: 24, background: 'var(--color-surface)', padding: 18, boxShadow: 'var(--shadow-lg)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{ width: 42, height: 42, borderRadius: 14, background: '#eff6ff', display: 'grid', placeItems: 'center', border: '1px solid #bfdbfe' }}>
             <Settings2 size={18} color="#1d4ed8" />
           </div>
           <div>
-            <h2 style={{ margin: 0, color: '#0f172a', fontWeight: 950, fontSize: '1.05rem' }}>Current workspace state</h2>
-            <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '0.84rem' }}>Quick reference for your active role and connected organization.</p>
+            <h2 style={{ margin: 0, color: 'var(--color-text-primary)', fontWeight: 950, fontSize: '1.05rem' }}>Current workspace state</h2>
+            <p style={{ margin: '4px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.84rem' }}>Quick reference for your active role and connected organization.</p>
           </div>
         </div>
         <div style={{ marginTop: 14, display: 'grid', gap: 10 }}>
@@ -102,14 +102,14 @@ function Card({
   children: React.ReactNode
 }) {
   return (
-    <div style={{ border: '1px solid #dbe4f0', borderRadius: 24, background: '#fff', padding: 18, boxShadow: '0 10px 28px rgba(15,23,42,0.04)' }}>
+    <div style={{ border: '1px solid var(--color-border)', borderRadius: 24, background: 'var(--color-surface)', padding: 18, boxShadow: 'var(--shadow-lg)' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         <div style={{ width: 42, height: 42, borderRadius: 14, background: '#ecfeff', display: 'grid', placeItems: 'center', border: '1px solid #bae6fd' }}>
           <Icon size={18} color="#0f766e" />
         </div>
         <div>
-          <h2 style={{ margin: 0, color: '#0f172a', fontWeight: 950, fontSize: '1.05rem' }}>{title}</h2>
-          <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '0.84rem', lineHeight: 1.55 }}>{subtitle}</p>
+          <h2 style={{ margin: 0, color: 'var(--color-text-primary)', fontWeight: 950, fontSize: '1.05rem' }}>{title}</h2>
+          <p style={{ margin: '4px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.84rem', lineHeight: 1.55 }}>{subtitle}</p>
         </div>
       </div>
       <div style={{ marginTop: 14 }}>{children}</div>
@@ -119,9 +119,9 @@ function Card({
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'center', border: '1px solid #e2e8f0', borderRadius: 14, background: '#f8fafc', padding: '12px 14px' }}>
-      <span style={{ color: '#64748b', fontWeight: 800, fontSize: '0.82rem' }}>{label}</span>
-      <span style={{ color: '#0f172a', fontWeight: 900, fontSize: '0.86rem', textAlign: 'right' }}>{value}</span>
+    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'center', border: '1px solid var(--color-border)', borderRadius: 14, background: 'var(--gray-50)', padding: '12px 14px' }}>
+      <span style={{ color: 'var(--color-text-secondary)', fontWeight: 800, fontSize: '0.82rem' }}>{label}</span>
+      <span style={{ color: 'var(--color-text-primary)', fontWeight: 900, fontSize: '0.86rem', textAlign: 'right' }}>{value}</span>
     </div>
   )
 }
@@ -129,11 +129,11 @@ function Row({ label, value }: { label: string; value: string }) {
 const inputStyle = {
   width: '100%',
   borderRadius: 14,
-  border: '1.5px solid #dbe4f0',
+  border: '1.5px solid var(--color-border)',
   padding: '12px 14px',
   fontSize: '0.9rem',
-  background: '#fff',
-  color: '#0f172a',
+  background: 'var(--color-surface)',
+  color: 'var(--color-text-primary)',
 } satisfies React.CSSProperties
 
 const primaryButtonStyle = {

@@ -234,7 +234,7 @@ export default function LoanProductsPanel({ products }: { products: Product[] })
 
             <div style={formSectionStyle}>
               <div style={sectionHeaderStyle}>
-                <ListChecks size={16} color="#7c3aed" />
+                <ListChecks size={16} color="#0f766e" />
                 Workflow configuration
               </div>
               <div style={{ display: 'grid', gap: 12 }}>
@@ -287,8 +287,8 @@ export default function LoanProductsPanel({ products }: { products: Product[] })
                 <div key={product.id} style={productCardStyle}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, alignItems: 'flex-start' }}>
                     <div>
-                      <p style={{ margin: 0, color: '#0f172a', fontWeight: 900, fontSize: '1rem' }}>{product.name}</p>
-                      <p style={{ margin: '6px 0 0', color: '#475569', fontSize: '0.84rem', lineHeight: 1.55 }}>
+                      <p style={{ margin: 0, color: 'var(--color-text-primary)', fontWeight: 900, fontSize: '1rem' }}>{product.name}</p>
+                      <p style={{ margin: '6px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.84rem', lineHeight: 1.55 }}>
                         {money(product.min_amount)} to {money(product.max_amount)} • {product.min_term_months}-{product.max_term_months} months
                       </p>
                     </div>
@@ -312,7 +312,7 @@ export default function LoanProductsPanel({ products }: { products: Product[] })
                     </div>
                   )}
 
-                  <p style={{ margin: '12px 0 0', color: '#64748b', fontSize: '0.8rem' }}>
+                  <p style={{ margin: '12px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.8rem' }}>
                     {product.market_rate_index ? `Market index ${product.market_rate_index}` : 'No market index linked'}
                     {product.max_debt_to_income ? ` • Max DTI ${(Number(product.max_debt_to_income) * 100).toFixed(0)}%` : ''}
                   </p>
@@ -386,42 +386,42 @@ function MiniMeta({
   value: string
 }) {
   return (
-    <div style={{ border: '1px solid #e2e8f0', borderRadius: 14, background: '#f8fafc', padding: 12 }}>
+    <div style={{ border: '1px solid var(--color-border)', borderRadius: 14, background: 'var(--gray-50)', padding: 12 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         <Icon size={14} color="#334155" />
-        <span style={{ color: '#64748b', fontSize: '0.75rem', fontWeight: 800 }}>{label}</span>
+        <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.75rem', fontWeight: 800 }}>{label}</span>
       </div>
-      <p style={{ margin: '8px 0 0', color: '#0f172a', fontWeight: 900, fontSize: '0.92rem' }}>{value}</p>
+      <p style={{ margin: '8px 0 0', color: 'var(--color-text-primary)', fontWeight: 900, fontSize: '0.92rem' }}>{value}</p>
     </div>
   )
 }
 
 const panelStyle: CSSProperties = {
-  border: '1px solid #dbe4f0',
+  border: '1px solid var(--color-border)',
   borderRadius: 24,
-  background: '#fff',
+  background: 'var(--color-surface)',
   padding: 18,
-  boxShadow: '0 12px 30px rgba(15,23,42,0.05)',
+  boxShadow: 'var(--shadow-lg)',
 }
 const heroKickerStyle: CSSProperties = { margin: 0, fontSize: '0.78rem', fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.78 }
 const heroTitleStyle: CSSProperties = { margin: '10px 0 0', fontSize: '2rem', lineHeight: 1.04, fontWeight: 950, letterSpacing: '-0.04em' }
 const heroBodyStyle: CSSProperties = { margin: '12px 0 0', color: 'rgba(255,255,255,0.82)', lineHeight: 1.7, maxWidth: 620 }
 const heroPanelStyle: CSSProperties = { borderRadius: 22, background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.14)', padding: 18, backdropFilter: 'blur(10px)' }
 const heroChipStyle: CSSProperties = { display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 12px', borderRadius: 999, background: 'rgba(255,255,255,0.10)', border: '1px solid rgba(255,255,255,0.12)', fontWeight: 800, fontSize: '0.82rem' }
-const panelTitleStyle: CSSProperties = { margin: 0, color: '#0f172a', fontWeight: 950, fontSize: '1.1rem' }
-const panelSubtitleStyle: CSSProperties = { margin: '6px 0 0', color: '#64748b', lineHeight: 1.65, fontSize: '0.86rem' }
+const panelTitleStyle: CSSProperties = { margin: 0, color: 'var(--color-text-primary)', fontWeight: 950, fontSize: '1.1rem' }
+const panelSubtitleStyle: CSSProperties = { margin: '6px 0 0', color: 'var(--color-text-secondary)', lineHeight: 1.65, fontSize: '0.86rem' }
 const pillStyle: CSSProperties = { display: 'inline-flex', alignItems: 'center', gap: 8, borderRadius: 999, padding: '8px 11px', background: '#ecfeff', border: '1px solid #bae6fd', color: '#0f766e', fontSize: '0.78rem', fontWeight: 900 }
-const formSectionStyle: CSSProperties = { border: '1px solid #e2e8f0', borderRadius: 18, background: '#fcfdff', padding: 16 }
-const sectionHeaderStyle: CSSProperties = { display: 'flex', alignItems: 'center', gap: 8, color: '#0f172a', fontWeight: 900, fontSize: '0.9rem', marginBottom: 12 }
+const formSectionStyle: CSSProperties = { border: '1px solid var(--color-border)', borderRadius: 18, background: 'var(--gray-50)', padding: 16 }
+const sectionHeaderStyle: CSSProperties = { display: 'flex', alignItems: 'center', gap: 8, color: 'var(--color-text-primary)', fontWeight: 900, fontSize: '0.9rem', marginBottom: 12 }
 const inputGridStyle: CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 12 }
-const labelStyle: CSSProperties = { display: 'block', marginBottom: 6, color: '#475569', fontWeight: 800, fontSize: '0.8rem' }
-const inputStyle: CSSProperties = { width: '100%', padding: '11px 12px', border: '1.5px solid #dbe4f0', borderRadius: 12, outline: 'none', background: '#fff', color: '#0f172a' }
-const textareaStyle: CSSProperties = { width: '100%', minHeight: 92, padding: '11px 12px', border: '1.5px solid #dbe4f0', borderRadius: 12, outline: 'none', background: '#fff', color: '#0f172a', resize: 'vertical' }
+const labelStyle: CSSProperties = { display: 'block', marginBottom: 6, color: 'var(--color-text-secondary)', fontWeight: 800, fontSize: '0.8rem' }
+const inputStyle: CSSProperties = { width: '100%', padding: '11px 12px', border: '1.5px solid var(--color-border)', borderRadius: 12, outline: 'none', background: 'var(--color-surface)', color: 'var(--color-text-primary)' }
+const textareaStyle: CSSProperties = { width: '100%', minHeight: 92, padding: '11px 12px', border: '1.5px solid var(--color-border)', borderRadius: 12, outline: 'none', background: 'var(--color-surface)', color: 'var(--color-text-primary)', resize: 'vertical' }
 const primaryButtonStyle: CSSProperties = { marginTop: 16, border: 'none', borderRadius: 14, background: 'linear-gradient(135deg, #0f766e 0%, #0f9f8c 100%)', color: '#fff', fontWeight: 900, padding: '13px 16px', cursor: 'pointer' }
-const emptyStyle: CSSProperties = { border: '1px dashed #cbd5e1', borderRadius: 16, padding: 14, color: '#64748b', background: '#f8fafc' }
-const productCardStyle: CSSProperties = { border: '1px solid #e2e8f0', borderRadius: 18, padding: 14, background: '#fff' }
+const emptyStyle: CSSProperties = { border: '1px dashed var(--color-border)', borderRadius: 16, padding: 14, color: 'var(--color-text-secondary)', background: 'var(--gray-50)' }
+const productCardStyle: CSSProperties = { border: '1px solid var(--color-border)', borderRadius: 18, padding: 14, background: 'var(--color-surface)' }
 const metaGridStyle: CSSProperties = { marginTop: 12, display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 10 }
-const workflowChipStyle: CSSProperties = { borderRadius: 999, padding: '7px 10px', background: '#f8fafc', color: '#334155', border: '1px solid #e2e8f0', fontSize: '0.76rem', fontWeight: 800 }
+const workflowChipStyle: CSSProperties = { borderRadius: 999, padding: '7px 10px', background: 'var(--gray-50)', color: 'var(--color-text-secondary)', border: '1px solid var(--color-border)', fontSize: '0.76rem', fontWeight: 800 }
 
 function statusBadgeStyle(status: string): CSSProperties {
   const key = status.toLowerCase()

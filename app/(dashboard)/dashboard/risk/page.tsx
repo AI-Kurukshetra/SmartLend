@@ -105,7 +105,7 @@ export default async function RiskPage() {
 
       <section style={{ display: 'grid', gap: 12 }}>
         {assessments.length === 0 && (
-          <div style={{ border: '1px dashed #cbd5e1', borderRadius: 18, background: '#fff', padding: 16, color: '#64748b' }}>
+          <div style={{ border: '1px dashed var(--color-border)', borderRadius: 18, background: 'var(--color-surface)', padding: 16, color: 'var(--color-text-secondary)' }}>
             No risk assessments yet. Submit or rerun underwriting on applications first.
           </div>
         )}
@@ -118,19 +118,19 @@ export default async function RiskPage() {
             <div
               key={item.id}
               style={{
-                border: '1px solid #dbe4f0',
+                border: '1px solid var(--color-border)',
                 borderRadius: 22,
-                background: '#fff',
+                background: 'var(--color-surface)',
                 padding: 18,
-                boxShadow: '0 10px 30px rgba(15,23,42,0.04)',
+                boxShadow: 'var(--shadow-lg)',
                 display: 'grid',
                 gap: 14,
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', alignItems: 'flex-start' }}>
                 <div>
-                  <p style={{ margin: 0, color: '#0f172a', fontWeight: 950, fontSize: '1rem' }}>{borrower?.full_name || 'Borrower'}</p>
-                  <p style={{ margin: '6px 0 0', color: '#64748b', fontSize: '0.84rem' }}>
+                  <p style={{ margin: 0, color: 'var(--color-text-primary)', fontWeight: 950, fontSize: '1rem' }}>{borrower?.full_name || 'Borrower'}</p>
+                  <p style={{ margin: '6px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.84rem' }}>
                     App #{item.application_id.slice(0, 8)} • {formatUiLabel(app?.status || 'n/a')} • {money(Number(app?.requested_amount || 0))}
                   </p>
                 </div>
@@ -148,15 +148,15 @@ export default async function RiskPage() {
                 <Metric label="Credit reports" value={String(metrics.bureau_reports_count ?? 0)} />
               </div>
 
-              <div style={{ border: '1px solid #e2e8f0', borderRadius: 16, background: '#f8fafc', padding: 14, color: '#475569', lineHeight: 1.65 }}>
+              <div style={{ border: '1px solid var(--color-border)', borderRadius: 16, background: 'var(--gray-50)', padding: 14, color: 'var(--color-text-secondary)', lineHeight: 1.65 }}>
                 {item.summary}
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 10 }}>
                 {factors.slice(0, 4).map((factor: any) => (
-                  <div key={factor.code} style={{ border: '1px solid #e2e8f0', borderRadius: 14, background: '#fff', padding: 12 }}>
-                    <p style={{ margin: 0, color: '#0f172a', fontWeight: 900 }}>{formatUiLabel(factor.code)}</p>
-                    <p style={{ margin: '5px 0 0', color: '#64748b', fontSize: '0.84rem', lineHeight: 1.55 }}>{factor.detail}</p>
+                  <div key={factor.code} style={{ border: '1px solid var(--color-border)', borderRadius: 14, background: 'var(--color-surface)', padding: 12 }}>
+                    <p style={{ margin: 0, color: 'var(--color-text-primary)', fontWeight: 900 }}>{formatUiLabel(factor.code)}</p>
+                    <p style={{ margin: '5px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.84rem', lineHeight: 1.55 }}>{factor.detail}</p>
                   </div>
                 ))}
               </div>
@@ -192,9 +192,9 @@ export default async function RiskPage() {
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div style={{ border: '1px solid #e2e8f0', borderRadius: 14, background: '#f8fafc', padding: 12 }}>
-      <p style={{ margin: 0, fontSize: '0.74rem', color: '#64748b', fontWeight: 800 }}>{label}</p>
-      <p style={{ margin: '7px 0 0', fontSize: '0.94rem', color: '#0f172a', fontWeight: 900 }}>{value}</p>
+    <div style={{ border: '1px solid var(--color-border)', borderRadius: 14, background: 'var(--gray-50)', padding: 12 }}>
+      <p style={{ margin: 0, fontSize: '0.74rem', color: 'var(--color-text-secondary)', fontWeight: 800 }}>{label}</p>
+      <p style={{ margin: '7px 0 0', fontSize: '0.94rem', color: 'var(--color-text-primary)', fontWeight: 900 }}>{value}</p>
     </div>
   )
 }
@@ -220,13 +220,13 @@ function MetricCard({
   }[tone]
 
   return (
-    <div style={{ border: '1px solid #dbe4f0', borderRadius: 22, background: '#fff', padding: 16, boxShadow: '0 10px 28px rgba(15,23,42,0.04)' }}>
+    <div style={{ border: '1px solid var(--color-border)', borderRadius: 22, background: 'var(--color-surface)', padding: 16, boxShadow: 'var(--shadow-lg)' }}>
       <div style={{ width: 44, height: 44, borderRadius: 14, background: palette.bg, border: `1px solid ${palette.ring}`, display: 'grid', placeItems: 'center' }}>
         <Icon size={18} color={palette.fg} />
       </div>
-      <p style={{ margin: '14px 0 0', color: '#64748b', fontWeight: 800, fontSize: '0.84rem' }}>{label}</p>
-      <p style={{ margin: '6px 0 0', color: '#0f172a', fontWeight: 950, fontSize: '1.7rem', letterSpacing: '-0.03em' }}>{value}</p>
-      <p style={{ margin: '8px 0 0', color: '#64748b', fontSize: '0.8rem', lineHeight: 1.55 }}>{hint}</p>
+      <p style={{ margin: '14px 0 0', color: 'var(--color-text-secondary)', fontWeight: 800, fontSize: '0.84rem' }}>{label}</p>
+      <p style={{ margin: '6px 0 0', color: 'var(--color-text-primary)', fontWeight: 950, fontSize: '1.7rem', letterSpacing: '-0.03em' }}>{value}</p>
+      <p style={{ margin: '8px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.8rem', lineHeight: 1.55 }}>{hint}</p>
     </div>
   )
 }

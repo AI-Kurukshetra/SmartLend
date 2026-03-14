@@ -217,8 +217,8 @@ export default async function AnalyticsPage() {
 
   return (
     <div>
-      <h1 style={{ margin: 0, fontSize: '1.9rem', fontWeight: 900, color: '#0f172a' }}>Analytics</h1>
-      <p style={{ marginTop: 8, color: '#64748b', maxWidth: 760 }}>
+      <h1 style={{ margin: 0, fontSize: '1.9rem', fontWeight: 900, color: 'var(--color-text-primary)' }}>Analytics</h1>
+      <p style={{ marginTop: 8, color: 'var(--color-text-secondary)', maxWidth: 760 }}>
         Operational KPIs generated from live SmartLend data across origination, underwriting, servicing, collections, documents, and communications.
       </p>
       <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: 'repeat(4, minmax(220px, 1fr))', gap: 12 }}>
@@ -264,12 +264,12 @@ function KpiCard({
   const colors = palette[tone]
 
   return (
-    <div style={{ border: '1px solid #dbe4f0', borderRadius: 18, background: '#fff', padding: 16, boxShadow: '0 10px 28px rgba(15,23,42,0.05)' }}>
+    <div style={{ border: '1px solid var(--color-border)', borderRadius: 18, background: 'var(--color-surface)', padding: 16, boxShadow: 'var(--shadow-lg)' }}>
       <div style={{ display: 'inline-flex', padding: '5px 10px', borderRadius: 999, background: colors.bg, color: colors.fg, border: `1px solid ${colors.ring}`, fontSize: '0.75rem', fontWeight: 800 }}>
         {label}
       </div>
-      <p style={{ margin: '14px 0 0', color: '#0f172a', fontWeight: 950, fontSize: '1.85rem', letterSpacing: '-0.03em' }}>{value}</p>
-      <p style={{ margin: '8px 0 0', color: '#64748b', fontSize: '0.84rem', lineHeight: 1.55 }}>{hint}</p>
+      <p style={{ margin: '14px 0 0', color: 'var(--color-text-primary)', fontWeight: 950, fontSize: '1.85rem', letterSpacing: '-0.03em' }}>{value}</p>
+      <p style={{ margin: '8px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.84rem', lineHeight: 1.55 }}>{hint}</p>
     </div>
   )
 }

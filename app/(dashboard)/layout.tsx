@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import Sidebar from '@/components/dashboard/Sidebar'
+import DashboardTopBar from '@/components/dashboard/DashboardTopBar'
 import { Menu, X } from 'lucide-react'
 import { useTheme } from '@/components/ThemeProvider'
 import { lightColors, darkColors } from '@/lib/theme'
@@ -99,6 +100,7 @@ export default function DashboardLayout({
         display: 'flex',
         flexDirection: 'column',
       }} className="dashboard-main-content">
+        <DashboardTopBar />
         {children}
       </main>
 

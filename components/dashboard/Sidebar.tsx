@@ -50,7 +50,6 @@ const navSections = [
             { href: '/dashboard/compliance', label: 'Compliance', icon: Gavel, permission: 'compliance.manage' },
             { href: '/dashboard/support', label: 'Support Inbox', icon: HelpCircle },
             { href: '/dashboard/help', label: 'Help Center', icon: HelpCircle },
-            { href: '/post-login?switch=1', label: 'Switch Actor', icon: User },
         ],
     },
 ]

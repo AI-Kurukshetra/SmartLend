@@ -19,6 +19,10 @@ function normalizeEmail(email: string) {
   return email.trim().toLowerCase()
 }
 
+function buildBorrowerInviteUrl(token: string) {
+  return `${getSiteUrl()}/borrower/accept?invite=${encodeURIComponent(token)}`
+}
+
 export async function inviteBorrower(formData: FormData) {
   const email = normalizeEmail(String(formData.get('email') || ''))
   if (!email) redirect('/dashboard/borrowers?error=Borrower%20email%20is%20required')
@@ -59,15 +63,6 @@ export async function inviteBorrower(formData: FormData) {
     redirect(`/dashboard/borrowers?error=${encodeURIComponent(insertInvite.error.message)}`)
   }
 
-  const acceptUrl = `${getSiteUrl()}/borrower/accept?invite=${encodeURIComponent(token)}`
-  const otpRes = await supabase.auth.signInWithOtp({
-    email,
-    options: { emailRedirectTo: acceptUrl },
-  })
-  if (otpRes.error) {
-    redirect(`/dashboard/borrowers?error=${encodeURIComponent(otpRes.error.message)}`)
-  }
-
   await createAuditEvent({
     orgId: membership.orgId,
     actorType: 'lender',
@@ -77,7 +72,7 @@ export async function inviteBorrower(formData: FormData) {
   })
 
   revalidatePath('/dashboard/borrowers')
-  redirect('/dashboard/borrowers?success=Borrower%20invite%20sent')
+  redirect('/dashboard/borrowers?success=Borrower%20invite%20link%20created')
 }
 
 export async function resendBorrowerInvite(formData: FormData) {
@@ -130,15 +125,6 @@ export async function resendBorrowerInvite(formData: FormData) {
     redirect(`/dashboard/borrowers?error=${encodeURIComponent(updateRes.error.message)}`)
   }
 
-  const acceptUrl = `${getSiteUrl()}/borrower/accept?invite=${encodeURIComponent(token)}`
-  const otpRes = await supabase.auth.signInWithOtp({
-    email: String(inviteRes.data.email || ''),
-    options: { emailRedirectTo: acceptUrl },
-  })
-  if (otpRes.error) {
-    redirect(`/dashboard/borrowers?error=${encodeURIComponent(otpRes.error.message)}`)
-  }
-
   await createAuditEvent({
     orgId: membership.orgId,
     actorType: 'lender',
@@ -149,7 +135,7 @@ export async function resendBorrowerInvite(formData: FormData) {
   })
 
   revalidatePath('/dashboard/borrowers')
-  redirect('/dashboard/borrowers?success=Borrower%20invite%20resent')
+  redirect('/dashboard/borrowers?success=Borrower%20invite%20link%20refreshed')
 }
 
 export async function acceptBorrowerInvite(token: string) {
@@ -189,6 +175,7 @@ export async function acceptBorrowerInvite(token: string) {
   const borrowerUpsert = await supabase
     .from('borrower_profiles')
     .upsert({
+      org_id: inviteRes.data.org_id,
       user_id: user.id,
       full_name: user.user_metadata?.full_name ?? null,
       phone: null,
@@ -229,4 +216,33 @@ export async function acceptBorrowerInvite(token: string) {
 
   revalidatePath('/dashboard/borrowers')
   return { success: true as const }
+}
+
+export async function getBorrowerInviteDetails(token: string) {
+  if (!token) return null
+
+  const supabase = await createClient()
+  const inviteRes = await supabase
+    .from('org_invites')
+    .select('id,org_id,email,role,expires_at,accepted_at')
+    .eq('token', token)
+    .eq('role', 'borrower')
+    .limit(1)
+    .maybeSingle()
+
+  if (!inviteRes.data || inviteRes.data.accepted_at) return null
+
+  const orgRes = await supabase
+    .from('organizations')
+    .select('name')
+    .eq('id', inviteRes.data.org_id)
+    .limit(1)
+    .maybeSingle()
+
+  return {
+    email: String(inviteRes.data.email || ''),
+    orgName: String(orgRes.data?.name || 'Lender organization'),
+    expiresAt: String(inviteRes.data.expires_at),
+    inviteUrl: buildBorrowerInviteUrl(token),
+  }
 }

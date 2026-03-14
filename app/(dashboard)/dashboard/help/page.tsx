@@ -44,30 +44,30 @@ export default function HelpPage() {
         {cards.map((card) => {
           const Icon = card.icon
           return (
-            <div key={card.title} style={{ border: '1px solid #dbe4f0', borderRadius: 24, background: '#fff', padding: 18, boxShadow: '0 10px 28px rgba(15,23,42,0.04)' }}>
+            <div key={card.title} style={{ border: '1px solid var(--color-border)', borderRadius: 24, background: 'var(--color-surface)', padding: 18, boxShadow: 'var(--shadow-lg)' }}>
               <div style={{ width: 46, height: 46, borderRadius: 16, background: '#eff6ff', border: '1px solid #bfdbfe', display: 'grid', placeItems: 'center' }}>
                 <Icon size={18} color="#1d4ed8" />
               </div>
-              <p style={{ margin: '14px 0 0', color: '#0f172a', fontWeight: 950, fontSize: '1.02rem' }}>{card.title}</p>
-              <p style={{ margin: '8px 0 0', color: '#64748b', lineHeight: 1.7 }}>{card.text}</p>
+              <p style={{ margin: '14px 0 0', color: 'var(--color-text-primary)', fontWeight: 950, fontSize: '1.02rem' }}>{card.title}</p>
+              <p style={{ margin: '8px 0 0', color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>{card.text}</p>
             </div>
           )
         })}
       </section>
 
-      <section style={{ border: '1px solid #dbe4f0', borderRadius: 24, background: '#fff', padding: 18, boxShadow: '0 10px 28px rgba(15,23,42,0.04)' }}>
+      <section style={{ border: '1px solid var(--color-border)', borderRadius: 24, background: 'var(--color-surface)', padding: 18, boxShadow: 'var(--shadow-lg)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{ width: 42, height: 42, borderRadius: 14, background: '#ecfeff', border: '1px solid #bae6fd', display: 'grid', placeItems: 'center' }}>
             <BookOpenCheck size={18} color="#0f766e" />
           </div>
           <div>
-            <h2 style={{ margin: 0, color: '#0f172a', fontWeight: 950, fontSize: '1.05rem' }}>Recommended operating pattern</h2>
-            <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '0.84rem' }}>Keep teams aligned around one predictable lender workflow.</p>
+            <h2 style={{ margin: 0, color: 'var(--color-text-primary)', fontWeight: 950, fontSize: '1.05rem' }}>Recommended operating pattern</h2>
+            <p style={{ margin: '4px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.84rem' }}>Keep teams aligned around one predictable lender workflow.</p>
           </div>
         </div>
         <div style={{ marginTop: 14, display: 'grid', gap: 10 }}>
           {['Review borrower readiness in Applications', 'Confirm engine and manual decisions in Underwriting', 'Complete funding handoff in Funding', 'Monitor live accounts in Servicing and Collections'].map((item) => (
-            <div key={item} style={{ border: '1px solid #e2e8f0', borderRadius: 14, background: '#f8fafc', padding: '12px 14px', color: '#0f172a', fontWeight: 800 }}>
+            <div key={item} style={{ border: '1px solid var(--color-border)', borderRadius: 14, background: 'var(--gray-50)', padding: '12px 14px', color: 'var(--color-text-primary)', fontWeight: 800 }}>
               {item}
             </div>
           ))}

@@ -1,39 +1,24 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import {
   AlertTriangle,
   ArrowRight,
-  Bell,
   BookOpenCheck,
-  CheckCheck,
   CheckCircle2,
   Clock3,
   FileSpreadsheet,
   Gavel,
   HandCoins,
   LineChart,
-  LogOut,
-  Moon,
   ShieldAlert,
-  Sun,
   Users,
   Wallet,
 } from 'lucide-react'
 import type { User } from '@supabase/supabase-js'
-import { logout } from '@/app/actions/auth'
 import { useTheme } from '@/components/ThemeProvider'
 import { darkColors, lightColors } from '@/lib/theme'
-
-type Notification = {
-  id: string
-  title: string
-  message: string
-  type: 'info' | 'success' | 'warning' | 'error'
-  read: boolean
-  created_at: string
-}
 
 type OverviewProps = {
   user: User | null
@@ -81,68 +66,10 @@ type OverviewProps = {
 }
 
 export default function DashboardHome({ user, data }: OverviewProps) {
-  const { theme, toggleTheme } = useTheme()
+  const { theme } = useTheme()
   const c = theme === 'dark' ? darkColors : lightColors
   const isDark = theme === 'dark'
   const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Operator'
-
-  const [notifOpen, setNotifOpen] = useState(false)
-  const [notifications, setNotifications] = useState<Notification[]>([])
-  const [unreadCount, setUnreadCount] = useState(0)
-  const [page, setPage] = useState(1)
-  const [hasMore, setHasMore] = useState(false)
-  const [notifLoading, setNotifLoading] = useState(false)
-  const notifRef = useRef<HTMLDivElement>(null)
-
-  const fetchNotifications = useCallback(async (nextPage = 1, append = false) => {
-    setNotifLoading(true)
-    try {
-      const res = await fetch(`/api/notifications?page=${nextPage}&limit=8`)
-      const payload = await res.json()
-      setNotifications((prev) => append ? [...prev, ...payload.notifications] : payload.notifications)
-      setUnreadCount(payload.unread)
-      setHasMore(payload.hasMore)
-      setPage(nextPage)
-    } catch {
-      // ignore notification fetch failures in dashboard shell
-    } finally {
-      setNotifLoading(false)
-    }
-  }, [])
-
-  useEffect(() => {
-    fetch('/api/notifications?page=1&limit=1')
-      .then((res) => res.json())
-      .then((payload) => setUnreadCount(payload.unread ?? 0))
-      .catch(() => {})
-  }, [])
-
-  useEffect(() => {
-    if (!notifOpen) return
-    fetchNotifications(1, false)
-  }, [notifOpen, fetchNotifications])
-
-  useEffect(() => {
-    function handleClick(event: MouseEvent) {
-      if (notifRef.current && !notifRef.current.contains(event.target as Node)) {
-        setNotifOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
-  }, [])
-
-  const markRead = async (id: string) => {
-    setNotifications((prev) => prev.map((item) => item.id === id ? { ...item, read: true } : item))
-    setUnreadCount((value) => Math.max(0, value - 1))
-    await fetch(`/api/notifications/${id}`, { method: 'PATCH' })
-  }
-
-  const markAllRead = async () => {
-    setNotifications((prev) => prev.map((item) => ({ ...item, read: true })))
-    setUnreadCount(0)
-    await fetch('/api/notifications/read-all', { method: 'POST' })
-  }
 
   const spotlight = useMemo(() => {
     const risk = data.metrics.highRiskApplications
@@ -235,88 +162,6 @@ export default function DashboardHome({ user, data }: OverviewProps) {
           <p style={{ margin: '10px 0 0', color: c.textSecondary, maxWidth: 760, lineHeight: 1.7 }}>
             {displayName}, this workspace tracks origination throughput, funding readiness, servicing health, compliance exceptions, and borrower portfolio activity in one place.
           </p>
-        </div>
-
-        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-          <div ref={notifRef} style={{ position: 'relative' }}>
-            <button
-              onClick={() => setNotifOpen((value) => !value)}
-              style={iconButton(c, theme === 'dark' ? 'rgba(255,255,255,0.04)' : '#fff')}
-              aria-label="Notifications"
-            >
-              <Bell size={16} />
-              {unreadCount > 0 && <span style={notifBadge(c)}>{unreadCount > 99 ? '99+' : unreadCount}</span>}
-            </button>
-            {notifOpen && (
-              <div style={{
-                position: 'absolute',
-                top: 'calc(100% + 10px)',
-                right: 0,
-                width: 360,
-                maxHeight: 460,
-                overflow: 'hidden',
-                display: 'flex',
-                flexDirection: 'column',
-                borderRadius: 18,
-                border: `1px solid ${c.border}`,
-                background: c.surface,
-                boxShadow: theme === 'dark' ? '0 24px 64px rgba(0,0,0,0.55)' : '0 28px 64px rgba(15,23,42,0.16)',
-                zIndex: 60,
-              }}>
-                <div style={{ padding: 14, borderBottom: `1px solid ${c.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div>
-                    <p style={{ margin: 0, fontWeight: 900, color: c.textPrimary }}>Notifications</p>
-                    <p style={{ margin: '4px 0 0', color: c.textMuted, fontSize: '0.76rem' }}>{unreadCount} unread</p>
-                  </div>
-                  {unreadCount > 0 && (
-                    <button onClick={markAllRead} style={{ border: 'none', background: 'transparent', color: '#0f766e', fontWeight: 800, cursor: 'pointer' }}>
-                      <CheckCheck size={14} style={{ verticalAlign: 'middle' }} /> Mark all
-                    </button>
-                  )}
-                </div>
-                <div style={{ overflowY: 'auto' }}>
-                  {notifLoading && notifications.length === 0 && <div style={emptyBox(c)}>Loading notifications…</div>}
-                  {!notifLoading && notifications.length === 0 && <div style={emptyBox(c)}>No notifications yet.</div>}
-                  {notifications.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => { if (!item.read) markRead(item.id) }}
-                      style={{
-                        width: '100%',
-                        textAlign: 'left',
-                        border: 'none',
-                        borderBottom: `1px solid ${c.border}`,
-                        background: item.read ? 'transparent' : (theme === 'dark' ? 'rgba(15,118,110,0.08)' : '#f0fdfa'),
-                        padding: 14,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-                        <p style={{ margin: 0, color: c.textPrimary, fontWeight: item.read ? 700 : 900 }}>{item.title}</p>
-                        <span style={{ color: c.textMuted, fontSize: '0.75rem' }}>{timeAgo(item.created_at)}</span>
-                      </div>
-                      <p style={{ margin: '6px 0 0', color: c.textSecondary, fontSize: '0.82rem', lineHeight: 1.55 }}>{item.message}</p>
-                    </button>
-                  ))}
-                  {hasMore && (
-                    <button onClick={() => fetchNotifications(page + 1, true)} style={{ width: '100%', border: 'none', background: 'transparent', padding: 12, color: '#0f766e', fontWeight: 800, cursor: 'pointer' }}>
-                      Load more
-                    </button>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-
-          <button onClick={toggleTheme} style={iconButton(c, theme === 'dark' ? 'rgba(251,191,36,0.1)' : '#fff')} aria-label="Toggle theme">
-            {theme === 'dark' ? <Sun size={16} color="#fbbf24" /> : <Moon size={16} />}
-          </button>
-
-          <form action={logout}>
-            <button type="submit" style={iconButton(c, isDark ? 'rgba(255,255,255,0.04)' : '#fff')} aria-label="Logout">
-              <LogOut size={16} />
-            </button>
-          </form>
         </div>
       </div>
 
@@ -586,40 +431,6 @@ function HeroChip({ icon: Icon, label, theme }: { icon: React.ComponentType<{ si
       {label}
     </span>
   )
-}
-
-function iconButton(c: typeof lightColors, background: string) {
-  return {
-    width: 40,
-    height: 40,
-    borderRadius: 14,
-    border: `1px solid ${c.borderStrong}`,
-    background,
-    color: c.textSecondary,
-    display: 'grid',
-    placeItems: 'center',
-    cursor: 'pointer',
-    position: 'relative' as const,
-  }
-}
-
-function notifBadge(c: typeof lightColors) {
-  return {
-    position: 'absolute' as const,
-    top: -4,
-    right: -4,
-    minWidth: 18,
-    height: 18,
-    padding: '0 5px',
-    borderRadius: 999,
-    background: '#ef4444',
-    color: '#fff',
-    border: `2px solid ${c.pageBg}`,
-    fontSize: '0.64rem',
-    fontWeight: 900,
-    display: 'grid',
-    placeItems: 'center',
-  }
 }
 
 function listRow(c: typeof lightColors) {

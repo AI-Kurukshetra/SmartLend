@@ -18,9 +18,20 @@ export async function createBorrowerProfile(formData: FormData) {
   if (!fullName) return { error: 'Full name is required.' as const }
   if (!acceptedTerms) return { error: 'You must accept terms to continue.' as const }
 
+  const inviteRes = await supabase
+    .from('org_invites')
+    .select('org_id')
+    .eq('role', 'borrower')
+    .eq('accepted_by', user.id)
+    .not('accepted_at', 'is', null)
+    .order('accepted_at', { ascending: false })
+    .limit(1)
+    .maybeSingle()
+
   const upsertRes = await supabase
     .from('borrower_profiles')
     .upsert({
+      org_id: inviteRes.data?.org_id ?? null,
       user_id: user.id,
       full_name: fullName,
       phone: phone || null,

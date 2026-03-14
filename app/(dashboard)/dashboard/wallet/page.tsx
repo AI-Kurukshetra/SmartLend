@@ -146,9 +146,9 @@ export default async function WalletPage() {
                     gridTemplateColumns: '44px 1fr auto',
                     gap: 12,
                     alignItems: 'center',
-                    border: '1px solid #e2e8f0',
+                    border: '1px solid var(--color-border)',
                     borderRadius: 18,
-                    background: '#fff',
+                    background: 'var(--color-surface)',
                     padding: 14,
                   }}
                 >
@@ -156,10 +156,10 @@ export default async function WalletPage() {
                     <Icon size={18} color={meta.fg} />
                   </div>
                   <div>
-                    <p style={{ margin: 0, color: '#0f172a', fontWeight: 900 }}>
+                    <p style={{ margin: 0, color: 'var(--color-text-primary)', fontWeight: 900 }}>
                       {money(Number(item.amount || 0))} {item.payment_method ? `• ${String(item.payment_method).toUpperCase()}` : ''}
                     </p>
-                    <p style={{ margin: '6px 0 0', color: '#64748b', fontSize: '0.84rem', lineHeight: 1.55 }}>
+                    <p style={{ margin: '6px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.84rem', lineHeight: 1.55 }}>
                       {item.external_reference ? `Ref ${item.external_reference}` : 'Internal payment record'}
                       {item.due_date ? ` • Due ${item.due_date}` : ''}
                       {item.posted_at ? ` • Posted ${timeAgo(item.posted_at)}` : ''}
@@ -218,10 +218,10 @@ function Panel({
   children: React.ReactNode
 }) {
   return (
-    <div style={{ border: '1px solid #dbe4f0', borderRadius: 24, background: '#fff', padding: 18, boxShadow: '0 12px 32px rgba(15,23,42,0.05)' }}>
+    <div style={{ border: '1px solid var(--color-border)', borderRadius: 24, background: 'var(--color-surface)', padding: 18, boxShadow: 'var(--shadow-lg)' }}>
       <div style={{ marginBottom: 14 }}>
-        <h2 style={{ margin: 0, color: '#0f172a', fontSize: '1.05rem', fontWeight: 950 }}>{title}</h2>
-        <p style={{ margin: '6px 0 0', color: '#64748b', fontSize: '0.85rem', lineHeight: 1.6 }}>{subtitle}</p>
+        <h2 style={{ margin: 0, color: 'var(--color-text-primary)', fontSize: '1.05rem', fontWeight: 950 }}>{title}</h2>
+        <p style={{ margin: '6px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.85rem', lineHeight: 1.6 }}>{subtitle}</p>
       </div>
       {children}
     </div>
@@ -249,13 +249,13 @@ function MetricCard({
   }[tone]
 
   return (
-    <div style={{ border: '1px solid #dbe4f0', borderRadius: 22, background: '#fff', padding: 16, boxShadow: '0 10px 28px rgba(15,23,42,0.04)' }}>
+    <div style={{ border: '1px solid var(--color-border)', borderRadius: 22, background: 'var(--color-surface)', padding: 16, boxShadow: 'var(--shadow-lg)' }}>
       <div style={{ width: 44, height: 44, borderRadius: 14, background: palette.bg, display: 'grid', placeItems: 'center', border: `1px solid ${palette.ring}` }}>
         <Icon size={18} color={palette.fg} />
       </div>
-      <p style={{ margin: '14px 0 0', color: '#64748b', fontWeight: 800, fontSize: '0.84rem' }}>{label}</p>
-      <p style={{ margin: '6px 0 0', color: '#0f172a', fontWeight: 950, fontSize: '1.7rem', letterSpacing: '-0.03em' }}>{value}</p>
-      <p style={{ margin: '8px 0 0', color: '#64748b', fontSize: '0.8rem', lineHeight: 1.55 }}>{hint}</p>
+      <p style={{ margin: '14px 0 0', color: 'var(--color-text-secondary)', fontWeight: 800, fontSize: '0.84rem' }}>{label}</p>
+      <p style={{ margin: '6px 0 0', color: 'var(--color-text-primary)', fontWeight: 950, fontSize: '1.7rem', letterSpacing: '-0.03em' }}>{value}</p>
+      <p style={{ margin: '8px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.8rem', lineHeight: 1.55 }}>{hint}</p>
     </div>
   )
 }
@@ -290,12 +290,12 @@ function HealthRow({
 }) {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '42px 1fr', gap: 12, alignItems: 'start', padding: '10px 0' }}>
-      <div style={{ width: 42, height: 42, borderRadius: 14, background: '#f8fafc', display: 'grid', placeItems: 'center', border: '1px solid #e2e8f0' }}>
-        <Icon size={18} color="#334155" />
+      <div style={{ width: 42, height: 42, borderRadius: 14, background: 'var(--gray-50)', display: 'grid', placeItems: 'center', border: '1px solid var(--color-border)' }}>
+        <Icon size={18} color="var(--color-text-secondary)" />
       </div>
       <div>
-        <p style={{ margin: 0, color: '#0f172a', fontWeight: 900 }}>{title}</p>
-        <p style={{ margin: '6px 0 0', color: '#64748b', fontSize: '0.84rem', lineHeight: 1.6 }}>{detail}</p>
+        <p style={{ margin: 0, color: 'var(--color-text-primary)', fontWeight: 900 }}>{title}</p>
+        <p style={{ margin: '6px 0 0', color: 'var(--color-text-secondary)', fontSize: '0.84rem', lineHeight: 1.6 }}>{detail}</p>
       </div>
     </div>
   )
@@ -312,7 +312,7 @@ function HeroChip({ icon: Icon, label }: { icon: React.ComponentType<{ size?: nu
 
 function EmptyState({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ border: '1px dashed #dbe4f0', borderRadius: 18, background: '#f8fafc', padding: 18, color: '#64748b' }}>
+    <div style={{ border: '1px dashed var(--color-border)', borderRadius: 18, background: 'var(--gray-50)', padding: 18, color: 'var(--color-text-secondary)' }}>
       {children}
     </div>
   )

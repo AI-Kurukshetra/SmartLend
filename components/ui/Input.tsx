@@ -50,7 +50,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           .input-field {
             width: 100%;
             padding: 12px 16px;
-            background: var(--white);
+            background: var(--color-surface);
             border: 1.5px solid var(--gray-200);
             border-radius: var(--radius-md);
             font-size: 0.9375rem;

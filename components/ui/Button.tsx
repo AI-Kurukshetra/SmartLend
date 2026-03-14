@@ -75,14 +75,14 @@ export default function Button({
         }
         /* Variants */
         .btn-primary {
-          background: linear-gradient(135deg, #7c3aed, #6d28d9);
-          color: var(--white);
-          box-shadow: 0 4px 15px rgba(124, 58, 237, 0.35);
+          background: linear-gradient(135deg, var(--brand-primary), #14b8a6);
+          color: #ffffff;
+          box-shadow: 0 4px 15px rgba(15, 118, 110, 0.35);
         }
         .btn-primary:hover:not(:disabled) {
-          background: linear-gradient(135deg, #6d28d9, #5b21b6);
+          background: linear-gradient(135deg, #0d5f59, #0f9f99);
           transform: translateY(-1px);
-          box-shadow: 0 6px 20px rgba(124, 58, 237, 0.45);
+          box-shadow: 0 6px 20px rgba(15, 118, 110, 0.45);
         }
         .btn-primary:active:not(:disabled) {
           transform: translateY(0);

@@ -55,7 +55,7 @@ export default function WelcomeBanner({ user }: WelcomeBannerProps) {
 
             <style jsx>{`
         .welcome-banner {
-          background: linear-gradient(135deg, var(--pastel-lavender-light) 0%, var(--pastel-mint-light) 100%);
+          background: linear-gradient(135deg, color-mix(in srgb, var(--pastel-lavender-light) 70%, var(--color-surface)) 0%, color-mix(in srgb, var(--pastel-mint-light) 70%, var(--color-surface)) 100%);
           border-radius: var(--radius-xl);
           padding: 28px 32px;
           display: flex;
@@ -97,7 +97,7 @@ export default function WelcomeBanner({ user }: WelcomeBannerProps) {
           padding-left: 52px;
         }
         .date-chip {
-          background: white;
+          background: var(--color-surface);
           border: 1px solid var(--pastel-lavender);
           border-radius: var(--radius-full);
           padding: 8px 18px;

@@ -147,7 +147,7 @@ export default function Navbar({ user }: NavbarProps) {
           position: sticky;
           top: 0;
           z-index: 50;
-          background: rgba(255, 255, 255, 0.88);
+          background: color-mix(in srgb, var(--color-surface) 88%, transparent);
           backdrop-filter: blur(16px);
           -webkit-backdrop-filter: blur(16px);
           border-bottom: 1px solid var(--color-border);
@@ -215,7 +215,7 @@ export default function Navbar({ user }: NavbarProps) {
         .nav-active-pill {
           position: absolute;
           inset: 0;
-          background: var(--white);
+          background: var(--color-surface);
           border-radius: var(--radius-full);
           box-shadow: var(--shadow-md);
           z-index: -1;
@@ -241,7 +241,7 @@ export default function Navbar({ user }: NavbarProps) {
           transition: all var(--transition-fast);
         }
         .search-box.focused {
-          background: var(--white);
+          background: var(--color-surface);
           border-color: var(--pastel-lavender);
           box-shadow: 0 0 0 3px var(--pastel-lavender-light);
         }
@@ -291,14 +291,14 @@ export default function Navbar({ user }: NavbarProps) {
           height: 8px;
           background: var(--pastel-peach-dark);
           border-radius: 50%;
-          border: 1.5px solid white;
+          border: 1.5px solid var(--color-surface);
         }
         .notif-dropdown {
           position: absolute;
           top: calc(100% + 10px);
           right: 0;
           width: 280px;
-          background: var(--white);
+          background: var(--color-surface);
           border: 1px solid var(--color-border);
           border-radius: var(--radius-lg);
           box-shadow: var(--shadow-xl);
@@ -376,7 +376,7 @@ export default function Navbar({ user }: NavbarProps) {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: var(--white);
+          background: var(--color-surface);
           border: none;
           border-radius: 50%;
           color: var(--gray-500);
