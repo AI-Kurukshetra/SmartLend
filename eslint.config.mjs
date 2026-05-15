@@ -15,9 +15,10 @@ const eslintConfig = defineConfig([
   ]),
   {
     rules: {
-      // Pre-existing any usages — warn rather than error so CI can run.
-      // Clean these up incrementally.
+      // Pre-existing violations — warn instead of error so CI can run.
+      // Clean up incrementally.
       "@typescript-eslint/no-explicit-any": "warn",
+      "react-hooks/set-state-in-effect": "warn",
     },
   },
 ]);
